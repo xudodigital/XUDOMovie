@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZLP60XCL2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FZLP60XCL2');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+    
+    <title>XUDOMovie - Movie Reviews, Trailers & Streaming Database</title>
+    <meta name="description" content="XUDOMovie is your premier source for movie reviews, cast information, trailers, and ratings for global cinema and TV series.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xudomovie.us/">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xudomovie.us/">
+    <meta property="og:title" content="XUDOMovie - Movie Reviews & Database">
+    <meta property="og:description" content="XUDOMovie is your trusted source for movie reviews, cast info, and ratings.">
+    <meta property="og:image" content="https://media.themoviedb.org/t/p/w500_and_h282_face/82lM4GJ9uuNvNDOEpxFy77uv4Ak.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@graph":[
+        {
+          "@type":"Organization",
+          "@id":"https://xudomovie.us/#organization",
+          "name":"XUDOMovie",
+          "url":"https://xudomovie.us/",
+          "logo":{
+            "@type":"ImageObject",
+            "url":"https://xudomovie.us/icon.png",
+            "width":512,"height":512,"caption":"XUDOMovie Logo"
+          },
+          "sameAs":["https://twitter.com/XUDOMovie","https://instagram.com/XUDOMovie","https://facebook.com/XUDOMovie"]
+        },
+        {
+          "@type":"WebSite",
+          "@id":"https://xudomovie.us/#website",
+          "url":"https://xudomovie.us/",
+          "name":"XUDOMovie - Movie Database",
+          "description":"Comprehensive movie reviews, ratings, and cast information.",
+          "publisher":{"@id":"https://xudomovie.us/#organization"},
+          "inLanguage":"en-US",
+          "potentialAction":{
+            "@type":"SearchAction",
+            "target":{"@type":"EntryPoint","urlTemplate":"https://xudomovie.us/index.html?search={search_term_string}"},
+            "query-input":"required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="movie-header">
+        <a href="index.html" class="logo" aria-label="XUDOMovie Home">XUDO<span>MOVIE</span></a>
+        
+        <nav class="nav-links" id="nav-menu">
+            <div class="search-wrapper">
+                <input type="text" id="search-input" class="search-input" placeholder="Search movies..." aria-label="Search Movies" onkeypress="handleEnter(event)" oninput="toggleClearButton()">
+                <button id="clear-btn" class="search-clear" onclick="clearSearch()" aria-label="Clear Search">✕</button>
+                <button class="search-btn" onclick="executeSearch()" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+
+            <a href="browse.html?type=favorites" class="header-fav-btn" aria-label="My Favorites">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <div class="hero-wrapper" id="hero-wrapper">
+        <div id="hero-slider" class="hero-container"></div>
+        <div class="hero-indicators" id="hero-dots"></div>
+    </div>
+
+    <main id="main-content"></main>
+
+    <div id="global-footer-placeholder"></div>
+    <script src="https://xudotrailer.us/js/global-footer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZLP60XCL2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FZLP60XCL2');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+    
+    <title>Browse - XUDOMovie</title>
+    <meta name="description" content="Browse our extensive collection of movies and TV series on XUDOMovie. Filter by genre, popularity, and top ratings.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://xudomovie.us/browse.html">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+    <header class="movie-header">
+        <a href="index.html" class="logo" aria-label="XUDOMovie Home">XUDO<span>MOVIE</span></a>
+        <nav class="nav-links" id="nav-menu">
+            <div class="search-wrapper">
+                <input type="text" id="search-input" class="search-input" placeholder="Search movies..." aria-label="Search Movies" onkeypress="handleEnter(event)" oninput="toggleClearButton()">
+                <button id="clear-btn" class="search-clear" onclick="clearSearch()" aria-label="Clear Search">✕</button>
+                <button class="search-btn" onclick="executeSearch()" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+            <a href="browse.html?type=favorites" class="header-fav-btn" aria-label="My Favorites">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <div class="media-grid-container">
+        <h2 class="page-title" id="page-title">Loading...</h2>
+        <div id="genre-list" class="genre-scroll"></div>
+        <div class="media-grid" id="browse-grid"></div>
+        <div class="load-more-container"><button id="load-more-btn" class="load-more-btn">Load More</button></div>
+    </div>
+
+    <div id="global-footer-placeholder"></div>
+    <script src="https://xudotrailer.us/js/global-footer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

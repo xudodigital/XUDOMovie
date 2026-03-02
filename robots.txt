@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Jangan biarkan bot mengindeks hasil pencarian dinamis agar kuota crawling tidak habis
+Disallow: /*?search=*
+Disallow: /*&search=*
+
+# Beritahu bot lokasi peta situs Anda
+Sitemap: https://xudomovie.us/sitemap.xml
