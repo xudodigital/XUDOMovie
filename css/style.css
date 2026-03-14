@@ -812,25 +812,30 @@ a {
     transform: scale(1.02);
 }
 
+/* [EN] Updated Trailer Button to perfectly match the Share Button size and weight */
 .trailer-btn {
+    flex: 1;
     background: #e50914;
     border: none;
     color: #fff;
-    padding: 8px 20px;
+    padding: 12px 0;
     border-radius: 50px;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 1rem;      /* [EN] Changed from 0.85rem to 1rem */
+    font-weight: 700;     /* [EN] Changed from 600 to 700 */
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     text-transform: uppercase;
+    height: 48px;
+    box-sizing: border-box;
 }
 
 .trailer-btn:hover {
     background: #b2070f;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 /* ============================================
