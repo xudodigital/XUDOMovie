@@ -598,11 +598,23 @@ async function loadHeroSlider() {
 
 /**
  * [EN] Loads multiple horizontal category sliders for the Homepage.
+ * [EN] UPDATED: Injects an advertisement banner between every category section.
  */
 async function loadAllSections() {
     const main = document.getElementById('main-content');
-    const cats = [{t: TEXTS.movPopular,u:"/movie/popular",k:"movie"},{t: TEXTS.movNowPlaying,u:"/movie/now_playing",k:"movie"},{t: TEXTS.movUpcoming,u:"/movie/upcoming",k:"movie"},{t: TEXTS.movTopRated,u:"/movie/top_rated",k:"movie"},{t: TEXTS.tvPopular,u:"/tv/popular",k:"tv"},{t: TEXTS.tvAiringToday,u:"/tv/airing_today",k:"tv"},{t: TEXTS.tvOnAir,u:"/tv/on_the_air",k:"tv"},{t: TEXTS.tvTopRated,u:"/tv/top_rated",k:"tv"}];
-    for (const c of cats) {
+    const cats = [
+        {t: TEXTS.movPopular, u:"/movie/popular", k:"movie"},
+        {t: TEXTS.movNowPlaying, u:"/movie/now_playing", k:"movie"},
+        {t: TEXTS.movUpcoming, u:"/movie/upcoming", k:"movie"},
+        {t: TEXTS.movTopRated, u:"/movie/top_rated", k:"movie"},
+        {t: TEXTS.tvPopular, u:"/tv/popular", k:"tv"},
+        {t: TEXTS.tvAiringToday, u:"/tv/airing_today", k:"tv"},
+        {t: TEXTS.tvOnAir, u:"/tv/on_the_air", k:"tv"},
+        {t: TEXTS.tvTopRated, u:"/tv/top_rated", k:"tv"}
+    ];
+    
+    for (let i = 0; i < cats.length; i++) {
+        const c = cats[i];
         try {
             const res = await fetch(`${BASE_URL}${c.u}?api_key=${API_KEY}&language=${CURRENT_LANG}`);
             if (!res.ok) throw new Error(`Failed section: ${c.u}`);
@@ -610,9 +622,25 @@ async function loadAllSections() {
             if (!d.results.length) continue;
             
             const link = `browse.html?endpoint=${c.u}&title=${encodeURIComponent(c.t)}&type=${c.k}&lang=${CURRENT_LANG}`;
-            const s = document.createElement('section'); s.className = 'content-section';
-            s.innerHTML = `<div class="section-header"><h2 class="section-heading"><a href="${link}">${c.t}</a></h2><a href="${link}" class="section-more-link">${TEXTS.viewMore} &rsaquo;</a></div><div class="horizontal-slider">${d.results.map(i => createCardHTML(i, c.k)).join('')}</div>`;
+            const s = document.createElement('section'); 
+            s.className = 'content-section';
+            s.innerHTML = `<div class="section-header"><h2 class="section-heading"><a href="${link}">${c.t}</a></h2><a href="${link}" class="section-more-link">${TEXTS.viewMore} &rsaquo;</a></div><div class="horizontal-slider">${d.results.map(item => createCardHTML(item, c.k)).join('')}</div>`;
             main.appendChild(s);
+
+            // [EN] Inject Ad Banner between sections (except after the very last section)
+            if (i < cats.length - 1) {
+                const adDiv = document.createElement('div');
+                adDiv.className = 'ad-banner-container';
+                
+                // [EN] You can replace the <span> with your actual Google AdSense or Ad Network <script> tags
+                adDiv.innerHTML = `
+                    <div class="ad-banner">
+                        <span>Advertisement</span>
+                    </div>
+                `;
+                main.appendChild(adDiv);
+            }
+
         } catch (error) {
             console.error(`[EN] Error loading section ${c.t}:`, error);
         }
