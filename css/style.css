@@ -1,3 +1,6 @@
+/* ============================================
+   [EN] 1. VARIABLES & BASE RESET
+   ============================================ */
 :root {
     --bg-black: #0f0f0f;
     --bg-main: #141414;
@@ -5,6 +8,10 @@
     --text-white: #ffffff;
     --text-muted: #b3b3b3;
     --padding-side: 4%;
+    
+    /* [EN] Tab Gradient Variables */
+    --tab-bg-color: #0f0f0f;
+    --gradient-width: 40px;
 }
 
 * {
@@ -29,7 +36,7 @@ a {
 }
 
 /* ============================================
-   HEADER & NAVIGATION
+   [EN] 2. HEADER & NAVIGATION
    ============================================ */
 .movie-header {
     position: fixed;
@@ -83,7 +90,7 @@ a {
 }
 
 /* ============================================
-   SEARCH COMPONENT
+   [EN] 3. SEARCH COMPONENT
    ============================================ */
 .search-wrapper {
     position: relative;
@@ -251,7 +258,231 @@ a {
 }
 
 /* ============================================
-   HERO SLIDER
+   [EN] 4. UI COMPONENTS (FILTERS, TABS, CARDS)
+   ============================================ */
+
+/* Advanced Filters */
+.modern-filters-container {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.filter-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.modern-filter-input,
+.modern-filter-select {
+    flex: 1 1 140px; 
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 50px; 
+    font-family: "Saira", sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.modern-filter-input::placeholder {
+    color: #888;
+}
+
+.modern-filter-input:focus,
+.modern-filter-select:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--main-red);
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.2);
+}
+
+.modern-filter-select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.dark-opt {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.modern-filter-btn {
+    flex: 1 1 120px;
+    background: var(--main-red);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-family: "Saira", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+}
+
+.modern-filter-btn:hover {
+    background: #b2070f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+}
+
+/* Hide Number Input Spinners */
+.modern-filter-input::-webkit-outer-spin-button,
+.modern-filter-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.modern-filter-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Tab Containers with Fading Gradients */
+.tab-container-with-gradients {
+    position: relative; 
+    width: 100%;
+    overflow: hidden; 
+}
+
+.tab-container-with-gradients .genre-scroll {
+    margin-bottom: 0;
+    padding-left: calc(var(--gradient-width) / 2);  
+    padding-right: calc(var(--gradient-width) / 2); 
+}
+
+.tab-container-with-gradients::before,
+.tab-container-with-gradients::after {
+    content: '';  
+    position: absolute;
+    top: 0;
+    width: var(--gradient-width);
+    height: 100%; 
+    z-index: 5;   
+    pointer-events: none; 
+}
+
+.tab-container-with-gradients::before {
+    left: 0;
+    background: linear-gradient(to right, var(--tab-bg-color) 0%, rgba(15, 15, 15, 0) 100%);
+}
+
+.tab-container-with-gradients::after {
+    right: 0;
+    background: linear-gradient(to left, var(--tab-bg-color) 0%, rgba(15, 15, 15, 0) 100%);
+}
+
+/* Content Cards */
+.content-card {
+    min-width: 160px;
+    width: 160px;
+    transition: 0.3s;
+    cursor: pointer;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.content-card:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.content-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #222;
+}
+
+.card-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #ffd700;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.card-fav-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 32px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    z-index: 20;
+}
+
+.card-fav-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #e50914;
+    transform: scale(1.1);
+}
+
+.card-fav-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+}
+
+.card-fav-btn.active svg {
+    fill: #e50914;
+    stroke: #e50914;
+}
+
+.card-info {
+    margin-top: 8px;
+    padding: 0 4px;
+}
+
+.card-title {
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    color: #fff;
+}
+
+.card-year {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 2px;
+}
+
+/* ============================================
+   [EN] 5. HERO SLIDER
    ============================================ */
 .hero-wrapper {
     position: relative;
@@ -364,7 +595,7 @@ a {
 }
 
 /* ============================================
-   CONTENT SECTIONS & CARDS
+   [EN] 6. PAGE LAYOUTS (BROWSE & SECTIONS)
    ============================================ */
 .content-section {
     padding: 40px 0 0 var(--padding-side);
@@ -414,104 +645,6 @@ a {
     display: none;
 }
 
-.content-card {
-    min-width: 160px;
-    width: 160px;
-    transition: 0.3s;
-    cursor: pointer;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-}
-
-.content-card:hover {
-    transform: scale(1.05);
-    z-index: 10;
-}
-
-.content-card img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 8px;
-    background: #222;
-}
-
-.card-rating {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    color: #ffd700;
-    font-weight: 700;
-    pointer-events: none;
-}
-
-.card-fav-btn {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    color: #fff;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    z-index: 20;
-}
-
-.card-fav-btn:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #e50914;
-    transform: scale(1.1);
-}
-
-.card-fav-btn svg {
-    width: 18px;
-    height: 18px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2px;
-}
-
-.card-fav-btn.active svg {
-    fill: #e50914;
-    stroke: #e50914;
-}
-
-.card-info {
-    margin-top: 8px;
-    padding: 0 4px;
-}
-
-.card-title {
-    font-size: 0.95rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600;
-    color: #fff;
-}
-
-.card-year {
-    font-size: 0.8rem;
-    color: #888;
-    margin-top: 2px;
-}
-
-/* ============================================
-   MEDIA GRID PAGE
-   ============================================ */
 .media-grid-container {
     padding: 120px var(--padding-side) 40px;
     min-height: 80vh;
@@ -612,7 +745,7 @@ a {
 }
 
 /* ============================================
-   VIDEO PLAYER & WATCH PAGE
+   [EN] 7. WATCH PAGE & VIDEO PLAYER
    ============================================ */
 .player-wrapper {
     position: relative;
@@ -623,7 +756,6 @@ a {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Desktop Player Styling */
 @media (min-width: 1025px) {
     .player-wrapper {
         padding-top: 0;
@@ -652,7 +784,6 @@ a {
     max-width: none;
 }
 
-/* Desktop Watch Container */
 @media (min-width: 1025px) {
     .watch-container {
         max-width: 1200px;
@@ -773,7 +904,8 @@ a {
 }
 
 .share-btn,
-.watch-now-btn {
+.watch-now-btn,
+.trailer-btn {
     flex: 1;
     padding: 12px 0;
     border-radius: 50px;
@@ -801,46 +933,20 @@ a {
     background: #444;
 }
 
-.watch-now-btn {
-    background: #e50914;
-    border: none;
-    color: #fff;
-}
-
-.watch-now-btn:hover {
-    background: #b2070f;
-    transform: scale(1.02);
-}
-
-/* [EN] Updated Trailer Button to perfectly match the Share Button size and weight */
+.watch-now-btn,
 .trailer-btn {
-    flex: 1;
     background: #e50914;
     border: none;
     color: #fff;
-    padding: 12px 0;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 1rem;      /* [EN] Changed from 0.85rem to 1rem */
-    font-weight: 700;     /* [EN] Changed from 600 to 700 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-transform: uppercase;
-    height: 48px;
-    box-sizing: border-box;
 }
 
+.watch-now-btn:hover,
 .trailer-btn:hover {
     background: #b2070f;
     transform: scale(1.02);
 }
 
-/* ============================================
-   MOVIE INFO & DETAILS
-   ============================================ */
+/* Movie Details */
 .movie-info {
     display: grid;
     grid-template-columns: 200px 1fr;
@@ -908,9 +1014,7 @@ a {
     font-size: 1rem;
 }
 
-/* ============================================
-   CAST SECTION
-   ============================================ */
+/* Cast Section */
 .cast-section {
     width: 100%;
     position: relative;
@@ -973,8 +1077,10 @@ a {
 }
 
 /* ============================================
-   TRAILER MODAL
+   [EN] 8. MODALS & FOOTER
    ============================================ */
+
+/* Trailer Modal */
 .trailer-modal {
     display: none;
     position: fixed;
@@ -1027,9 +1133,7 @@ a {
     display: flex;
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
+/* Global Footer */
 .sk-footer {
     background-color: #111;
     padding: 60px 4% 40px;
@@ -1210,7 +1314,7 @@ a {
 }
 
 /* ============================================
-   SKELETON LOADING
+   [EN] 9. ANIMATIONS & UTILITIES
    ============================================ */
 .skeleton {
     background: #1f1f1f;
@@ -1221,12 +1325,8 @@ a {
 }
 
 @keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .skeleton-card {
@@ -1239,9 +1339,6 @@ a {
     display: inline-block;
 }
 
-/* ============================================
-   ERROR HANDLING
-   ============================================ */
 .error-message {
     text-align: center;
     padding: 50px;
@@ -1250,9 +1347,7 @@ a {
     font-weight: 600;
 }
 
-/* ============================================
-   PWA INSTALL BUTTON
-   ============================================ */
+/* PWA Install Elements */
 .pwa-btn-wrapper {
     display: flex;
     align-items: center;
@@ -1327,7 +1422,6 @@ a {
     line-height: 1;
 }
 
-/* iOS Install Popup */
 .ios-install-popup {
     position: fixed;
     bottom: 30px;
@@ -1356,8 +1450,10 @@ a {
 }
 
 /* ============================================
-   RESPONSIVE - TABLET (max-width: 900px)
+   [EN] 10. RESPONSIVE MEDIA QUERIES
    ============================================ */
+
+/* TABLET */
 @media (max-width: 900px) {
     .sk-footer-grid {
         grid-template-columns: 1fr 1fr;
@@ -1374,9 +1470,7 @@ a {
     }
 }
 
-/* ============================================
-   RESPONSIVE - MOBILE (max-width: 768px)
-   ============================================ */
+/* MOBILE */
 @media (max-width: 768px) {
     .search-wrapper {
         position: fixed;
@@ -1485,7 +1579,8 @@ a {
     }
 
     .share-btn,
-    .trailer-btn {
+    .trailer-btn,
+    .watch-now-btn {
         flex: 1;
         justify-content: center;
         width: auto;
@@ -1519,9 +1614,7 @@ a {
     }
 }
 
-/* ============================================
-   RESPONSIVE - SMALL MOBILE (max-width: 480px)
-   ============================================ */
+/* SMALL MOBILE */
 @media (max-width: 480px) {
     .hero-title {
         font-size: 1.6rem;
@@ -1547,161 +1640,11 @@ a {
     .media-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
-}
-
-/* ============================================
-   MODERN ADVANCED FILTERS
-   ============================================ */
-.modern-filters-container {
-    margin-bottom: 25px;
-    width: 100%;
-}
-
-.filter-group {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.modern-filter-input,
-.modern-filter-select {
-    flex: 1 1 140px; /* [EN] Grow and shrink responsively based on screen size */
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 50px; /* [EN] Rounded corners to match the theme */
-    font-family: "Saira", sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.modern-filter-input::placeholder {
-    color: #888;
-}
-
-/* [EN] Glow effect when user types or clicks */
-.modern-filter-input:focus,
-.modern-filter-select:focus {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--main-red);
-    box-shadow: 0 0 10px rgba(229, 9, 20, 0.2);
-}
-
-/* [EN] Custom styling for the dropdown arrow */
-.modern-filter-select {
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 16px;
-    padding-right: 40px;
-}
-
-/* [EN] Dark background for dropdown options so it is readable */
-.dark-opt {
-    background-color: #1a1a1a;
-    color: #fff;
-}
-
-.modern-filter-btn {
-    flex: 1 1 120px;
-    background: var(--main-red);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-family: "Saira", sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-transform: uppercase;
-}
-
-.modern-filter-btn:hover {
-    background: #b2070f;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-}
-
-/* [EN] Full width stacking for very small mobile screens */
-@media (max-width: 480px) {
+    
+    /* Advanced Filters layout fix for small screens */
     .modern-filter-input,
     .modern-filter-select,
     .modern-filter-btn {
         flex: 1 1 100%;
     }
-}
-
-/* ============================================
-   [EN] HIDE NUMBER INPUT SPINNERS (ARROWS)
-   ============================================ */
-/* [EN] For Chrome, Safari, Edge, Opera */
-.modern-filter-input::-webkit-outer-spin-button,
-.modern-filter-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* [EN] For Firefox */
-.modern-filter-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-/* ============================================
-   [EN] TAB CONTAINERS WITH FADING GRADIENTS
-   ============================================ */
-
-/* [EN] Root variables to easily change colors in one place */
-:root {
-  --tab-bg-color: #0f0f0f; /* [EN] This must match your site's background color for the effect to work */
-  --gradient-width: 40px;  /* [EN] You can adjust the width of the fading effect here */
-}
-
-/* [EN] New container for the scrollable tabs */
-.tab-container-with-gradients {
-  position: relative; /* [EN] Essential for placing the pseudo-elements on top */
-  width: 100%;
-  overflow: hidden;   /* [EN] Keeps everything contained */
-}
-
-/* [EN] Target the existing scrollable content inside the new container */
-.tab-container-with-gradients .genre-scroll {
-  /* [EN] Ensure the content itself doesn't show its own overflow */
-  margin-bottom: 0;
-  padding-left: calc(var(--gradient-width) / 2);  /* [EN] Add some space for the initial item */
-  padding-right: calc(var(--gradient-width) / 2); /* [EN] Add some space for the final item */
-}
-
-/* [EN] Shared styles for both left and right gradients */
-.tab-container-with-gradients::before,
-.tab-container-with-gradients::after {
-  content: '';  /* [EN] Standard pseudo-element content */
-  position: absolute;
-  top: 0;
-  width: var(--gradient-width);
-  height: 100%; /* [EN] Cover the full height of the tab bar */
-  z-index: 5;   /* [EN] Places gradients on top of the tabs but below overlays (if any) */
-  pointer-events: none; /* [EN] CRITICAL: Allows clicks to pass through to the tabs themselves */
-}
-
-/* [EN] Left gradient: fades from background color to transparent */
-.tab-container-with-gradients::before {
-  left: 0;
-  background: linear-gradient(to right, var(--tab-bg-color) 0%, rgba(15, 15, 15, 0) 100%);
-}
-
-/* [EN] Right gradient: fades from transparent to background color */
-.tab-container-with-gradients::after {
-  right: 0;
-  background: linear-gradient(to left, var(--tab-bg-color) 0%, rgba(15, 15, 15, 0) 100%);
 }
