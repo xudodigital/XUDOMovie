@@ -6,6 +6,7 @@
  * Benefit: Maximum Ranking Power.
  */
 
+// [EN] Updated text to focus on online streaming and entertainment
 const GLOBAL_FOOTER_CONTENT = `
 <footer class="sk-footer">
     <div class="sk-footer-top">
@@ -66,11 +67,11 @@ const GLOBAL_FOOTER_CONTENT = `
     <div class="sk-bottom-info">
         <div class="sk-office-box">
             <div class="sk-office-title">THE XUDODigital ENTERPRISE ECOSYSTEM</div>
-            <p>XUDODigital is a strategically integrated digital media network engineered to deliver scalable, high-impact entertainment and information solutions across global markets.</p>
+            <p>XUDODigital is a strategically integrated digital media network engineered to deliver scalable, high-impact entertainment and streaming solutions across global markets.</p>
         </div>
         <div class="sk-about-box">
-            <div class="sk-office-title">COMMITMENT TO DIGITAL</div>
-            <p>Through XUDOGame, XUDOMovie, XUDONews, XUDOTrailer, and XUDOTV, we empower audiences with authoritative content, data-driven insights, and premium user experiences — defined by speed, credibility, and international relevance.</p>
+            <div class="sk-office-title">COMMITMENT TO ENTERTAINMENT</div>
+            <p>Through XUDOGame, XUDOMovie, XUDONews, XUDOTrailer, and XUDOTV, we empower audiences with unlimited streaming, premium entertainment, and seamless user experiences — defined by speed, credibility, and international relevance.</p>
         </div>
     </div>
 </footer>`;

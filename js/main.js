@@ -417,6 +417,7 @@ async function fetchCertification(type, id) {
 
 /**
  * [EN] Initializes the Homepage logic (either search results or default sliders).
+ * UPDATED for Streaming SEO Focus
  */
 async function initHome() {
     const q = new URLSearchParams(window.location.search).get('search');
@@ -425,7 +426,8 @@ async function initHome() {
         updateSEOMeta(`Search: ${q}`, `Results for ${q}`); 
         await performSearch(q);
     } else {
-        updateSEOMeta("XUDOTrailer - Reviews, Trailers & Movie Database", "XUDOTrailer is your premier source for movie reviews, cast information, trailers, and ratings.");
+        // [EN] Changed SEO strings to reflect online streaming 
+        updateSEOMeta("XUDOMovie - Watch Movies & TV Shows Online Free", "XUDOMovie is your premium online streaming service. Watch full movies and TV series in HD quality.");
         await loadHeroSlider(); 
         loadContinueWatching(); 
         await loadAllSections();
@@ -733,6 +735,7 @@ async function loadEpisodesForSeason(id, sn) {
 
 /**
  * [EN] Fetches core details and injects SEO disclaimers into the Watch page.
+ * UPDATED for Streaming SEO Focus
  */
 async function fetchMovieDetails(type, id) {
     try {
@@ -744,7 +747,8 @@ async function fetchMovieDetails(type, id) {
         const title = d.title || d.name, year = (d.release_date || d.first_air_date || '').split('-')[0] || '----';
         const rt = type === 'movie' && d.runtime ? `${Math.floor(d.runtime/60)}h ${d.runtime%60}m` : (type === 'tv' && d.episode_run_time?.[0] ? `${d.episode_run_time[0]}m / ep` : 'N/A');
 
-        updateSEOMeta(`${title} (${year}) - Reviews & Details`, `Read reviews and watch the trailer for ${title}.`);
+        // [EN] Update meta tags to push streaming keywords
+        updateSEOMeta(`Watch ${title} (${year}) Full HD Online`, `Stream ${title} (${year}) in HD quality. Watch full movies and TV series online at XUDOMovie.`);
 
         const authDomain = sanitizeHTML(CONFIG.AUTHORITY_DOMAIN);
         const currentDomain = sanitizeHTML(window.location.hostname);
@@ -753,11 +757,11 @@ async function fetchMovieDetails(type, id) {
         
         // [EN] Dynamic Legal/DMCA disclaimers for US domain compliance
         const seoVariations = [
-            `<strong>Legal Disclaimer & DMCA Compliance Notice:</strong><br> Please be advised that <strong>${currentDomain}</strong> strictly adheres to the provisions of the Digital Millennium Copyright Act (DMCA) and applicable United States copyright laws, including 17 U.S.C. § 512. This platform functions exclusively as an automated indexing and search aggregator. We do not host, upload, store, or control any media files, video streams, or copyrighted materials pertaining to <strong>${titleClean}</strong> on our proprietary servers or infrastructure. All multimedia content accessed through this interface is hosted and delivered by independent, non-affiliated third-party providers. Any legal inquiries, copyright claims, or takedown requests regarding the media content must be directed explicitly to the respective third-party hosting services, as <strong>${currentDomain}</strong> retains no direct or jurisdictional control over external media repositories.`
+            `<strong>Legal Disclaimer & DMCA Compliance Notice:</strong><br> Please be advised that <strong>${currentDomain}</strong> strictly adheres to the provisions of the Digital Millennium Copyright Act (DMCA) and applicable United States copyright laws, including 17 U.S.C. § 512. This platform functions exclusively as an automated indexing and search aggregator for streaming media. We do not host, upload, store, or control any media files, video streams, or copyrighted materials pertaining to <strong>${titleClean}</strong> on our proprietary servers or infrastructure. All multimedia content accessed through this interface is hosted and delivered by independent, non-affiliated third-party providers. Any legal inquiries, copyright claims, or takedown requests regarding the media content must be directed explicitly to the respective third-party hosting services, as <strong>${currentDomain}</strong> retains no direct or jurisdictional control over external media repositories.`
         ];
         const randomSeoText = seoVariations[Math.floor(Math.random() * seoVariations.length)];
         
-        // [EN] Inject random SEO text without the legal disclaimer
+        // [EN] Inject random SEO text
         const seoText = `<br><br>${randomSeoText}`;
 
         const set = (id, v, isHTML = false) => { const el = document.getElementById(id); if (el) isHTML ? el.innerHTML = v : el.innerText = v; };
@@ -782,7 +786,6 @@ async function fetchMovieDetails(type, id) {
             const localFile = LOCAL_SEARCH_INDEX.find(x => x.id == id && x.type == type);
             
             if (localFile) {
-                // watchFullBtn.href = `https://xudomovie.us/${localFile.folder}/${localFile.slug}.html`;
                 watchFullBtn.href = `https://xudomovie.us/watch.html?type=${type}&id=${id}&lang=${CURRENT_LANG}`;
             } else {
                 watchFullBtn.href = `https://xudomovie.us/watch.html?type=${type}&id=${id}&lang=${CURRENT_LANG}`;
