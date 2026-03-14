@@ -175,7 +175,37 @@ window.toggleClearButton = function() {
 };
 
 /**
+ * [EN] Helper function to parse multi-search results.
+ * [EN] If the result is a person (actor/actress), it extracts the movies/TV shows they are known for.
+ */
+function parseMultiSearchResults(results) {
+    let finalResults = [];
+    let seenIds = new Set(); // To prevent duplicate movies/shows
+    
+    results.forEach(i => {
+        // If it's a movie or TV show, add it directly
+        if (i.media_type === 'movie' || i.media_type === 'tv') {
+            if (!seenIds.has(i.id)) {
+                finalResults.push(i);
+                seenIds.add(i.id);
+            }
+        } 
+        // If it's a person, extract their "known_for" media
+        else if (i.media_type === 'person' && i.known_for) {
+            i.known_for.forEach(media => {
+                if ((media.media_type === 'movie' || media.media_type === 'tv') && !seenIds.has(media.id)) {
+                    finalResults.push(media);
+                    seenIds.add(media.id);
+                }
+            });
+        }
+    });
+    return finalResults;
+}
+
+/**
  * [EN] Fetches live search suggestions from TMDB API as the user types.
+ * [EN] UPDATED: Now supports extracting movies/shows from Actor names.
  */
 async function fetchLiveSearch(query) {
     const dropdown = document.getElementById('search-dropdown');
@@ -184,7 +214,9 @@ async function fetchLiveSearch(query) {
     try {
         const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&language=${CURRENT_LANG}&query=${encodeURIComponent(query)}`);
         const data = await res.json();
-        const results = data.results.filter(i => i.media_type === 'movie' || i.media_type === 'tv').slice(0, 10);
+        
+        // [EN] Parse results using our new helper and take the top 10
+        const results = parseMultiSearchResults(data.results).slice(0, 10);
 
         if (results.length > 0) {
             dropdown.innerHTML = results.map(i => {
@@ -192,7 +224,6 @@ async function fetchLiveSearch(query) {
                 const year = sanitizeHTML((i.release_date || i.first_air_date || '').split('-')[0] || 'N/A');
                 const poster = i.poster_path ? IMG_THUMB + i.poster_path : 'https://via.placeholder.com/40x60?text=NA';
                 
-                // Safe for inline JS handler injection
                 const safeTitle = title.replace(/'/g, "\\'");
                 const safePoster = (i.poster_path ? IMG_POSTER + i.poster_path : poster).replace(/'/g, "\\'");
                 const rating = i.vote_average ? i.vote_average.toFixed(1) : 'NR';
@@ -212,6 +243,30 @@ async function fetchLiveSearch(query) {
     } catch (error) { 
         console.error("[EN] Live Search Fetch Error:", error);
         dropdown.classList.remove('active'); 
+    }
+}
+
+/**
+ * [EN] Executes a full multi-search and renders results in a grid.
+ * [EN] UPDATED: Now supports extracting movies/shows from Actor names.
+ */
+async function performSearch(q) {
+    const m = document.getElementById('main-content');
+    const safeQ = sanitizeHTML(q);
+    m.innerHTML = `<div class="media-grid-container"><h2 class="page-title">Searching...</h2><div id="search-grid" class="media-grid"></div></div>`;
+    renderSkeletons('search-grid', 10);
+    try {
+        const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&language=${CURRENT_LANG}&query=${encodeURIComponent(q)}`);
+        if (!res.ok) throw new Error("Search API failed");
+        const d = await res.json();
+        
+        // [EN] Parse results using our new helper
+        const results = parseMultiSearchResults(d.results);
+        
+        m.innerHTML = `<div class="media-grid-container"><h2 class="page-title">Results: "${safeQ}"</h2>${results.length ? `<div class="media-grid">${results.map(i => createCardHTML(i)).join('')}</div>` : '<div class="no-results">No results.</div>'}</div>`;
+    } catch (error) {
+        console.error("[EN] Perform Search Error:", error);
+        m.innerHTML = `<div class="media-grid-container"><h2 class="page-title" style="color:red;">Error fetching results</h2></div>`;
     }
 }
 
@@ -555,6 +610,7 @@ async function loadAllSections() {
 
 /**
  * [EN] Executes a full multi-search and renders results in a grid.
+ * [EN] UPDATED: Now supports extracting movies/shows from Actor names.
  */
 async function performSearch(q) {
     const m = document.getElementById('main-content');
@@ -565,7 +621,10 @@ async function performSearch(q) {
         const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&language=${CURRENT_LANG}&query=${encodeURIComponent(q)}`);
         if (!res.ok) throw new Error("Search API failed");
         const d = await res.json();
-        const results = d.results.filter(i => i.media_type === 'movie' || i.media_type === 'tv');
+        
+        // [EN] Parse results using our new helper
+        const results = parseMultiSearchResults(d.results);
+        
         m.innerHTML = `<div class="media-grid-container"><h2 class="page-title">Results: "${safeQ}"</h2>${results.length ? `<div class="media-grid">${results.map(i => createCardHTML(i)).join('')}</div>` : '<div class="no-results">No results.</div>'}</div>`;
     } catch (error) {
         console.error("[EN] Perform Search Error:", error);
@@ -930,12 +989,12 @@ window.closeTrailer = function() {
 };
 
 /**
- * [EN] Applies Advanced Filters (Year, Rating, Actor) to the Browse Grid
+ * [EN] Applies Advanced Filters (Year and Rating) to the Browse Grid
+ * [EN] UPDATED: Removed actor filter as it's now handled by the main search.
  */
 window.applyAdvancedFilters = async function() {
     const year = document.getElementById('filter-year').value.trim();
     const rating = document.getElementById('filter-rating').value.trim();
-    const actorName = document.getElementById('filter-actor').value.trim();
     
     let extraParams = '';
     
@@ -948,20 +1007,6 @@ window.applyAdvancedFilters = async function() {
     // 2. Rating Filter
     if (rating) {
         extraParams += `&vote_average.gte=${rating}`;
-    }
-    
-    // 3. Actor/Actress Filter (Requires an extra API call to get Person ID)
-    if (actorName) {
-        try {
-            const res = await fetch(`${BASE_URL}/search/person?api_key=${API_KEY}&query=${encodeURIComponent(actorName)}`);
-            const d = await res.json();
-            if (d.results && d.results.length > 0) {
-                extraParams += `&with_cast=${d.results[0].id}`;
-            } else {
-                alert(`Actor "${actorName}" not found. Please check the spelling.`);
-                return; // Stop filtering if actor is invalid
-            }
-        } catch (e) { console.error("[EN] Actor search error", e); }
     }
     
     // Reset Grid & Pagination
