@@ -989,12 +989,12 @@ window.closeTrailer = function() {
 };
 
 /**
- * [EN] Applies Advanced Filters (Year and Rating) to the Browse Grid
- * [EN] UPDATED: Removed actor filter as it's now handled by the main search.
+ * [EN] Applies Advanced Filters (Year, Rating, and Country) to the Browse Grid
  */
 window.applyAdvancedFilters = async function() {
     const year = document.getElementById('filter-year').value.trim();
     const rating = document.getElementById('filter-rating').value.trim();
+    const country = document.getElementById('filter-country').value; // [EN] Fetch the selected country code
     
     let extraParams = '';
     
@@ -1007,6 +1007,11 @@ window.applyAdvancedFilters = async function() {
     // 2. Rating Filter
     if (rating) {
         extraParams += `&vote_average.gte=${rating}`;
+    }
+
+    // 3. Country Filter
+    if (country) {
+        extraParams += `&with_origin_country=${country}`;
     }
     
     // Reset Grid & Pagination

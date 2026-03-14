@@ -1543,3 +1543,111 @@ a {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 }
+
+/* ============================================
+   MODERN ADVANCED FILTERS
+   ============================================ */
+.modern-filters-container {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.filter-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.modern-filter-input,
+.modern-filter-select {
+    flex: 1 1 140px; /* [EN] Grow and shrink responsively based on screen size */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 50px; /* [EN] Rounded corners to match the theme */
+    font-family: "Saira", sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.modern-filter-input::placeholder {
+    color: #888;
+}
+
+/* [EN] Glow effect when user types or clicks */
+.modern-filter-input:focus,
+.modern-filter-select:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--main-red);
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.2);
+}
+
+/* [EN] Custom styling for the dropdown arrow */
+.modern-filter-select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* [EN] Dark background for dropdown options so it is readable */
+.dark-opt {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.modern-filter-btn {
+    flex: 1 1 120px;
+    background: var(--main-red);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-family: "Saira", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+}
+
+.modern-filter-btn:hover {
+    background: #b2070f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+}
+
+/* [EN] Full width stacking for very small mobile screens */
+@media (max-width: 480px) {
+    .modern-filter-input,
+    .modern-filter-select,
+    .modern-filter-btn {
+        flex: 1 1 100%;
+    }
+}
+
+/* ============================================
+   [EN] HIDE NUMBER INPUT SPINNERS (ARROWS)
+   ============================================ */
+/* [EN] For Chrome, Safari, Edge, Opera */
+.modern-filter-input::-webkit-outer-spin-button,
+.modern-filter-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* [EN] For Firefox */
+.modern-filter-input[type=number] {
+    -moz-appearance: textfield;
+}
