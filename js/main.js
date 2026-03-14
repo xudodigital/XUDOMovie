@@ -598,7 +598,7 @@ async function loadHeroSlider() {
 
 /**
  * [EN] Loads multiple horizontal category sliders for the Homepage.
- * [EN] UPDATED: Injects an advertisement banner between every category section.
+ * [EN] UPDATED: Uses iframe to securely inject Adsterra (or any script-based ads).
  */
 async function loadAllSections() {
     const main = document.getElementById('main-content');
@@ -627,15 +627,15 @@ async function loadAllSections() {
             s.innerHTML = `<div class="section-header"><h2 class="section-heading"><a href="${link}">${c.t}</a></h2><a href="${link}" class="section-more-link">${TEXTS.viewMore} &rsaquo;</a></div><div class="horizontal-slider">${d.results.map(item => createCardHTML(item, c.k)).join('')}</div>`;
             main.appendChild(s);
 
-            // [EN] Inject Ad Banner between sections (except after the very last section)
+            // [EN] Inject Adsterra Banner securely via iframe
             if (i < cats.length - 1) {
                 const adDiv = document.createElement('div');
                 adDiv.className = 'ad-banner-container';
                 
-                // [EN] You can replace the <span> with your actual Google AdSense or Ad Network <script> tags
+                // [EN] We use an iframe to prevent Adsterra's script from breaking the dynamic DOM
                 adDiv.innerHTML = `
-                    <div class="ad-banner">
-                        <span>Advertisement</span>
+                    <div class="ad-banner" style="background: transparent; border: none;">
+                        <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
                     </div>
                 `;
                 main.appendChild(adDiv);
