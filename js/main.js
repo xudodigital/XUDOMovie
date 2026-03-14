@@ -468,15 +468,26 @@ async function fetchGenres(type) {
 
 /**
  * [EN] Global function to trigger genre filtering in Browse page.
+ * [EN] FIX: Now calls applyAdvancedFilters() to ensure Year and Country are preserved.
  */
 window.filterByGenre = function(id, btn) {
     document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentGenreId = id; currentPage = 1;
-    document.getElementById('browse-grid').innerHTML = '';
-    renderSkeletons('browse-grid', 10);
-    currentBrowseEndpoint = id ? `/discover/${currentMediaType}?with_genres=${id}&sort_by=popularity.desc` : (new URLSearchParams(window.location.search).get('endpoint'));
-    loadBrowseContent();
+    
+    // [EN] Set the current genre ID
+    currentGenreId = id; 
+    
+    // [EN] Trigger the advanced filter function to combine Genre, Year, and Country!
+    if (typeof window.applyAdvancedFilters === 'function') {
+        window.applyAdvancedFilters();
+    } else {
+        // [EN] Fallback just in case advanced filters are missing
+        currentPage = 1;
+        document.getElementById('browse-grid').innerHTML = '';
+        renderSkeletons('browse-grid', 10);
+        currentBrowseEndpoint = id ? `/discover/${currentMediaType}?with_genres=${id}&sort_by=popularity.desc` : (new URLSearchParams(window.location.search).get('endpoint'));
+        loadBrowseContent();
+    }
 };
 
 /**
@@ -989,12 +1000,16 @@ window.closeTrailer = function() {
 };
 
 /**
- * [EN] Applies Advanced Filters (Year and Country) to the Browse Grid
- * [EN] UPDATED: Removed Rating filter logic.
+ * [EN] Applies Advanced Filters (Year and Country) and combines them with Genre.
+ * [EN] FIX: Elegantly falls back to original endpoint if no filters are active.
  */
 window.applyAdvancedFilters = async function() {
-    const year = document.getElementById('filter-year').value.trim();
-    const country = document.getElementById('filter-country').value; // [EN] Fetch the selected country code
+    const yearInput = document.getElementById('filter-year');
+    const countryInput = document.getElementById('filter-country');
+    
+    // [EN] Safely get values, fallback to empty string if elements don't exist
+    const year = yearInput ? yearInput.value.trim() : '';
+    const country = countryInput ? countryInput.value : ''; 
     
     let extraParams = '';
     
@@ -1014,14 +1029,22 @@ window.applyAdvancedFilters = async function() {
     document.getElementById('browse-grid').innerHTML = '';
     renderSkeletons('browse-grid', 10);
     
-    // Construct new API Endpoint dynamically
-    let baseEndpoint = `/discover/${currentMediaType}`;
-    let params = `?sort_by=popularity.desc`;
-    if (currentGenreId) params += `&with_genres=${currentGenreId}`;
+    // [EN] SMART ROUTING: Combine all active filters
+    // If absolutely NO filters and NO genre are active, return to the default category
+    if (!extraParams && !currentGenreId) {
+        const originalEndpoint = new URLSearchParams(window.location.search).get('endpoint');
+        currentBrowseEndpoint = originalEndpoint || `/discover/${currentMediaType}?sort_by=popularity.desc`;
+    } else {
+        let baseEndpoint = `/discover/${currentMediaType}`;
+        let params = `?sort_by=popularity.desc`;
+        
+        // Add genre if selected
+        if (currentGenreId) params += `&with_genres=${currentGenreId}`;
+        
+        currentBrowseEndpoint = baseEndpoint + params + extraParams;
+    }
     
-    currentBrowseEndpoint = baseEndpoint + params + extraParams;
-    
-    // Fetch the filtered content
+    // Fetch the combined filtered content
     loadBrowseContent();
 };
 
