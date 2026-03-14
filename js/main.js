@@ -989,11 +989,11 @@ window.closeTrailer = function() {
 };
 
 /**
- * [EN] Applies Advanced Filters (Year, Rating, and Country) to the Browse Grid
+ * [EN] Applies Advanced Filters (Year and Country) to the Browse Grid
+ * [EN] UPDATED: Removed Rating filter logic.
  */
 window.applyAdvancedFilters = async function() {
     const year = document.getElementById('filter-year').value.trim();
-    const rating = document.getElementById('filter-rating').value.trim();
     const country = document.getElementById('filter-country').value; // [EN] Fetch the selected country code
     
     let extraParams = '';
@@ -1003,13 +1003,8 @@ window.applyAdvancedFilters = async function() {
         if (currentMediaType === 'movie') extraParams += `&primary_release_year=${year}`;
         else extraParams += `&first_air_date_year=${year}`;
     }
-    
-    // 2. Rating Filter
-    if (rating) {
-        extraParams += `&vote_average.gte=${rating}`;
-    }
 
-    // 3. Country Filter
+    // 2. Country Filter
     if (country) {
         extraParams += `&with_origin_country=${country}`;
     }
