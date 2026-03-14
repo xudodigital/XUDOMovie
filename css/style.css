@@ -1656,3 +1656,52 @@ a {
 .modern-filter-input[type=number] {
     -moz-appearance: textfield;
 }
+
+/* ============================================
+   [EN] TAB CONTAINERS WITH FADING GRADIENTS
+   ============================================ */
+
+/* [EN] Root variables to easily change colors in one place */
+:root {
+  --tab-bg-color: #0f0f0f; /* [EN] This must match your site's background color for the effect to work */
+  --gradient-width: 40px;  /* [EN] You can adjust the width of the fading effect here */
+}
+
+/* [EN] New container for the scrollable tabs */
+.tab-container-with-gradients {
+  position: relative; /* [EN] Essential for placing the pseudo-elements on top */
+  width: 100%;
+  overflow: hidden;   /* [EN] Keeps everything contained */
+}
+
+/* [EN] Target the existing scrollable content inside the new container */
+.tab-container-with-gradients .genre-scroll {
+  /* [EN] Ensure the content itself doesn't show its own overflow */
+  margin-bottom: 0;
+  padding-left: calc(var(--gradient-width) / 2);  /* [EN] Add some space for the initial item */
+  padding-right: calc(var(--gradient-width) / 2); /* [EN] Add some space for the final item */
+}
+
+/* [EN] Shared styles for both left and right gradients */
+.tab-container-with-gradients::before,
+.tab-container-with-gradients::after {
+  content: '';  /* [EN] Standard pseudo-element content */
+  position: absolute;
+  top: 0;
+  width: var(--gradient-width);
+  height: 100%; /* [EN] Cover the full height of the tab bar */
+  z-index: 5;   /* [EN] Places gradients on top of the tabs but below overlays (if any) */
+  pointer-events: none; /* [EN] CRITICAL: Allows clicks to pass through to the tabs themselves */
+}
+
+/* [EN] Left gradient: fades from background color to transparent */
+.tab-container-with-gradients::before {
+  left: 0;
+  background: linear-gradient(to right, var(--tab-bg-color) 0%, rgba(15, 15, 15, 0) 100%);
+}
+
+/* [EN] Right gradient: fades from transparent to background color */
+.tab-container-with-gradients::after {
+  right: 0;
+  background: linear-gradient(to left, var(--tab-bg-color) 0%, rgba(15, 15, 15, 0) 100%);
+}
