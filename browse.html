@@ -44,12 +44,6 @@
     <div class="media-grid-container">
         <h2 class="page-title" id="page-title">Loading...</h2>
 
-        <div class="ad-banner-container" style="margin: 20px auto;">
-            <div class="ad-banner" style="background: transparent; border: none;">
-                <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
-            </div>
-        </div>
-        
         <div class="modern-filters-container">
             <div class="filter-group">
                 <input type="number" id="filter-year" placeholder="Year (e.g., 2024)" class="modern-filter-input" min="1900" max="2030">
@@ -80,8 +74,20 @@
             <div id="genre-list" class="genre-scroll"></div>
         </div>
         
+        <div class="ad-banner-container" style="margin: 10px auto 20px auto;">
+            <div class="ad-banner" style="background: transparent; border: none;">
+                <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
+            </div>
+        </div>
+
         <div class="media-grid" id="browse-grid"></div>
         
+        <div class="ad-banner-container" style="margin: 30px auto 10px auto;">
+            <div class="ad-banner" style="background: transparent; border: none;">
+                <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
+            </div>
+        </div>
+
         <div class="load-more-container">
             <button id="load-more-btn" class="load-more-btn">Load More</button>
         </div>
@@ -89,7 +95,6 @@
 
     <div id="global-footer-placeholder"></div>
     <script src="https://xudotrailer.us/js/global-footer.js"></script>
-    
     <script src="js/main.js"></script>
 </body>
 </html>

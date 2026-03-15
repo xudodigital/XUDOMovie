@@ -44,7 +44,13 @@
 
     <div class="player-wrapper" id="player-container"></div>
 
-    <div class="watch-container" style="padding-top: 20px; padding-bottom: 0;">
+    <div class="ad-banner-container" style="margin: 20px auto 0 auto;">
+        <div class="ad-banner" style="background: transparent; border: none;">
+            <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
+        </div>
+    </div>
+
+    <div class="watch-container" style="padding-top: 20px;">
         <div class="control-bar" id="control-bar">
             <div class="server-control">
                 <span class="server-label" style="color: #b3b3b3; margin-right: 10px;">Servers:</span>
@@ -54,15 +60,7 @@
                 <button class="server-btn" onclick="changeServer(4)">4</button>
             </div>
         </div>
-    </div>
 
-    <div class="ad-banner-container" style="margin: 20px auto;">
-            <div class="ad-banner" style="background: transparent; border: none;">
-                <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
-            </div>
-    </div>
-
-    <div class="watch-container">
         <div class="tv-controls" id="tv-controls" style="display:none;">
             <div class="tv-controls-header">
                 <h3>Select Episode</h3>
@@ -113,13 +111,17 @@
             </div>
         </div>
 
+        <div class="ad-banner-container" style="margin: 40px auto 10px auto;">
+            <div class="ad-banner" style="background: transparent; border: none;">
+                <iframe src="ad-banner.html" width="100%" height="90" frameborder="0" scrolling="no" style="max-width: 728px; border:none; overflow:hidden;"></iframe>
+            </div>
+        </div>
+
         <div class="recommendations-section" style="margin-top: 50px;">
             <h2 class="section-title">You May Also Like</h2>
             <div class="horizontal-slider" id="rec-slider"></div>
         </div>
-    </div>
-
-    <div id="global-footer-placeholder"></div>
+    </div> <div id="global-footer-placeholder"></div>
     <script src="https://xudotrailer.us/js/global-footer.js"></script>
     <script src="js/main.js"></script>
     <div id="trailer-modal" class="trailer-modal">
