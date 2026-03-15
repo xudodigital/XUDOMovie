@@ -5,6 +5,7 @@
  * - XSS Protection (Sanitization)
  * - Explicit Error Handling
  * - Logically Ordered & Structured
+ * - SEO Optimized: Clean URLs & Accurate Meta Tags
  */
 
 /* ==========================================================================
@@ -70,6 +71,7 @@ function sanitizeHTML(str) {
 
 /**
  * [EN] Sets or updates the canonical link tag for SEO, forcing credit to Authority Domain.
+ * [EN] FIX: Removed window.location.search to prevent parameterized URLs from becoming canonical.
  */
 function updateCanonical() {
     let link = document.querySelector("link[rel='canonical']") || document.createElement('link');
@@ -78,9 +80,11 @@ function updateCanonical() {
     const staticCanonical = document.querySelector("link[rel='canonical']");
     if (staticCanonical && !CONFIG.IS_LOCALHOST && staticCanonical.href.includes(CONFIG.AUTHORITY_DOMAIN)) return;
 
-    const relativePath = window.location.pathname + window.location.search;
+    // [EN] Only use the pathname to keep canonical URLs perfectly clean
+    const relativePath = window.location.pathname;
+    
     if (CONFIG.IS_LOCALHOST) {
-        link.href = window.location.href;
+        link.href = window.location.origin + relativePath;
     } else {
         link.href = CONFIG.AUTHORITY_URL + relativePath;
     }
@@ -94,11 +98,9 @@ function updateCanonical() {
  */
 function updateSEOMeta(t, d) {
     document.title = t;
-    
     let m = document.querySelector('meta[name="description"]') || document.createElement('meta');
     m.name = 'description'; 
     m.content = d;
-    
     if (!m.parentNode) document.head.appendChild(m);
 }
 
@@ -157,6 +159,7 @@ async function loadSearchIndex() {
 /**
  * [EN] Determines whether to redirect to a generated static page or a dynamic watch page.
  * [EN] UPDATED: Added support for Smart Continue Watching (Season & Episode routing).
+ * [EN] FIX: Removed &lang parameter to prevent duplicate content issues.
  */
 function getTargetUrl(item) {
     const type = item.media_type || (item.title ? 'movie' : 'tv');
@@ -168,7 +171,8 @@ function getTargetUrl(item) {
         extraParams = `&s=${item.season}&e=${item.episode}`;
     }
 
-    return localFile ? `/${localFile.folder}/${localFile.slug}.html${extraParams ? '?' + extraParams.substring(1) : ''}` : `/watch.html?type=${type}&id=${item.id}&lang=${CURRENT_LANG}${extraParams}`;
+    // [EN] Removed &lang parameter to keep URLs clean for SEO
+    return localFile ? `/${localFile.folder}/${localFile.slug}.html${extraParams ? '?' + extraParams.substring(1) : ''}` : `/watch.html?type=${type}&id=${item.id}${extraParams}`;
 }
 
 /**
@@ -426,7 +430,8 @@ window.clearSearch = function() {
 
 window.executeSearch = function() {
     const q = document.getElementById('search-input').value.trim();
-    if (q) window.location.href = `index.html?search=${encodeURIComponent(q)}&lang=${CURRENT_LANG}`;
+    // [EN] FIX: Removed &lang parameter to prevent duplicate content SEO issues
+    if (q) window.location.href = `index.html?search=${encodeURIComponent(q)}`;
 };
 
 window.handleEnter = function(e) { 
@@ -456,6 +461,7 @@ async function initBrowse() {
     }
     if (!ep) return window.location.href = `index.html`;
 
+    // [EN] innerText is automatically safe from XSS, using sanitizeHTML caused '&amp;' issues
     document.getElementById('page-title').innerText = title;
     document.getElementById('load-more-btn').onclick = () => loadBrowseContent();
     currentMediaType = type; currentBrowseEndpoint = ep;
@@ -600,7 +606,7 @@ async function initHome() {
         updateSEOMeta(`Search: ${q}`, `Results for ${q}`); 
         await performSearch(q);
     } else {
-        // [EN] Updated description to exactly match the static meta description in index.html
+        // [EN] Updated description to exactly match the static meta description in index.html for consistency
         updateSEOMeta("XUDOMovie - Watch Movies & TV Shows Online Free", "XUDOMovie is your premium online streaming platform. Watch full movies and TV series in HD quality, anytime, anywhere.");
         await loadHeroSlider(); 
         loadContinueWatching(); 
@@ -698,7 +704,8 @@ async function loadAllSections() {
             const d = await res.json();
             if (!d.results.length) continue;
             
-            const link = `browse.html?endpoint=${c.u}&title=${encodeURIComponent(c.t)}&type=${c.k}&lang=${CURRENT_LANG}`;
+            // [EN] FIX: Removed &lang parameter to prevent duplicate content SEO issues
+            const link = `browse.html?endpoint=${c.u}&title=${encodeURIComponent(c.t)}&type=${c.k}`;
             const s = document.createElement('section'); 
             s.className = 'content-section';
             s.innerHTML = `<div class="section-header"><h2 class="section-heading"><a href="${link}">${c.t}</a></h2><a href="${link}" class="section-more-link">${TEXTS.viewMore} &rsaquo;</a></div><div class="horizontal-slider">${d.results.map(item => createCardHTML(item, c.k)).join('')}</div>`;
@@ -914,10 +921,11 @@ async function fetchMovieDetails(type, id) {
         const watchFullBtn = document.getElementById('watch-full-btn');
         if (watchFullBtn) {
             const localFile = LOCAL_SEARCH_INDEX.find(x => x.id == id && x.type == type);
+            // [EN] FIX: Removed &lang parameter to prevent duplicate content SEO issues
             if (localFile) {
-                watchFullBtn.href = `https://xudomovie.us/watch.html?type=${type}&id=${id}&lang=${CURRENT_LANG}`;
+                watchFullBtn.href = `https://xudomovie.us/watch.html?type=${type}&id=${id}`;
             } else {
-                watchFullBtn.href = `https://xudomovie.us/watch.html?type=${type}&id=${id}&lang=${CURRENT_LANG}`;
+                watchFullBtn.href = `https://xudomovie.us/watch.html?type=${type}&id=${id}`;
             }
             watchFullBtn.target = "_blank";
         }
