@@ -987,7 +987,46 @@ window.shareMovie = () => {
 };
 
 /* ==========================================================================
-   11. APPLICATION INITIALIZATION
+   11. CUSTOM UI COMPONENTS
+   ========================================================================== */
+
+/**
+ * Initializes custom dropdown selects to replace native HTML elements.
+ */
+function initCustomSelect() {
+    const wrapper = document.getElementById('country-dropdown');
+    if (!wrapper) return;
+    
+    const trigger = document.getElementById('country-trigger');
+    const options = wrapper.querySelectorAll('.custom-option');
+    const hiddenInput = document.getElementById('filter-country');
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        wrapper.classList.toggle('open');
+    });
+
+    options.forEach(opt => {
+        opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            trigger.innerText = this.innerText;
+            hiddenInput.value = this.getAttribute('data-value');
+            
+            options.forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            wrapper.classList.remove('open');
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
+    });
+}
+
+/* ==========================================================================
+   12. APPLICATION INITIALIZATION
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -995,6 +1034,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCanonical(); 
     initContentProtection(); 
     initSearchEvents();
+    initCustomSelect(); 
     
     // Simple router based on presence of specific DOM elements
     if (document.getElementById('hero-slider')) initHome();

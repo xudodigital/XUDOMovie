@@ -48,34 +48,37 @@
             <div class="filter-group">
                 <input type="number" id="filter-year" placeholder="Year (e.g., 2024)" class="modern-filter-input" min="1900" max="2030">
                 
-                <select id="filter-country" class="modern-filter-select">
-                    <option value="" class="dark-opt">All Countries</option>
-                    
-                    <option value="AR" class="dark-opt">Argentina</option>
-                    <option value="AU" class="dark-opt">Australia</option>
-                    <option value="BR" class="dark-opt">Brazil</option>
-                    <option value="CA" class="dark-opt">Canada</option>
-                    <option value="CN" class="dark-opt">China</option>
-                    <option value="EG" class="dark-opt">Egypt</option>
-                    <option value="FR" class="dark-opt">France</option>
-                    <option value="DE" class="dark-opt">Germany</option>
-                    <option value="HK" class="dark-opt">Hong Kong</option>
-                    <option value="IN" class="dark-opt">India</option>
-                    <option value="ID" class="dark-opt">Indonesia</option>
-                    <option value="IT" class="dark-opt">Italy</option>
-                    <option value="JP" class="dark-opt">Japan</option>
-                    <option value="MX" class="dark-opt">Mexico</option>
-                    <option value="NG" class="dark-opt">Nigeria</option>
-                    <option value="PH" class="dark-opt">Philippines</option>
-                    <option value="RU" class="dark-opt">Russia</option>
-                    <option value="KR" class="dark-opt">South Korea</option>
-                    <option value="ES" class="dark-opt">Spain</option>
-                    <option value="TW" class="dark-opt">Taiwan</option>
-                    <option value="TH" class="dark-opt">Thailand</option>
-                    <option value="TR" class="dark-opt">Turkey</option>
-                    <option value="GB" class="dark-opt">United Kingdom</option>
-                    <option value="US" class="dark-opt">United States</option>
-                </select>
+                <div class="custom-select-wrapper" id="country-dropdown">
+                    <div class="custom-select-trigger" id="country-trigger">All Countries</div>
+                    <div class="custom-select-options" id="country-options">
+                        <div class="custom-option selected" data-value="">All Countries</div>
+                        <div class="custom-option" data-value="AR">Argentina</div>
+                        <div class="custom-option" data-value="AU">Australia</div>
+                        <div class="custom-option" data-value="BR">Brazil</div>
+                        <div class="custom-option" data-value="CA">Canada</div>
+                        <div class="custom-option" data-value="CN">China</div>
+                        <div class="custom-option" data-value="EG">Egypt</div>
+                        <div class="custom-option" data-value="FR">France</div>
+                        <div class="custom-option" data-value="DE">Germany</div>
+                        <div class="custom-option" data-value="HK">Hong Kong</div>
+                        <div class="custom-option" data-value="IN">India</div>
+                        <div class="custom-option" data-value="ID">Indonesia</div>
+                        <div class="custom-option" data-value="IT">Italy</div>
+                        <div class="custom-option" data-value="JP">Japan</div>
+                        <div class="custom-option" data-value="MX">Mexico</div>
+                        <div class="custom-option" data-value="NG">Nigeria</div>
+                        <div class="custom-option" data-value="PH">Philippines</div>
+                        <div class="custom-option" data-value="RU">Russia</div>
+                        <div class="custom-option" data-value="KR">South Korea</div>
+                        <div class="custom-option" data-value="ES">Spain</div>
+                        <div class="custom-option" data-value="TW">Taiwan</div>
+                        <div class="custom-option" data-value="TH">Thailand</div>
+                        <div class="custom-option" data-value="TR">Turkey</div>
+                        <div class="custom-option" data-value="GB">United Kingdom</div>
+                        <div class="custom-option" data-value="US">United States</div>
+                    </div>
+                    <input type="hidden" id="filter-country" value="">
+                </div>
 
                 <button onclick="applyAdvancedFilters()" class="modern-filter-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
