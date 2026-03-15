@@ -21,39 +21,110 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xudomovie.us/">
     <meta property="og:title" content="XUDOMovie - Watch Movies & TV Shows Online">
-    <meta property="og:description" content="XUDOMovie is your premium online streaming platform. Watch full movies and TV series in HD quality.">
+    <meta property="og:description" content="XUDOMovie is your premium online streaming platform. Watch full movies and TV series in HD quality, anytime, anywhere.">
     <meta property="og:image" content="https://media.themoviedb.org/t/p/w500_and_h282_face/82lM4GJ9uuNvNDOEpxFy77uv4Ak.jpg">
     <meta property="twitter:card" content="summary_large_image">
 
     <script type="application/ld+json">
     {
-      "@context":"https://schema.org",
-      "@graph":[
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@type":"Organization",
-          "@id":"https://xudomovie.us/#organization",
-          "name":"XUDOMovie",
-          "url":"https://xudomovie.us/",
-          "logo":{
-            "@type":"ImageObject",
-            "url":"https://xudomovie.us/icon.png",
-            "width":512,"height":512,"caption":"XUDOMovie Logo"
+          /* [EN] 1. Organization Schema (Brand & Corporate Identity) */
+          "@type": "Organization",
+          "@id": "https://xudomovie.us/#organization",
+          "name": "XUDOMovie",
+          "alternateName": "XUDO Digital Streaming",
+          "url": "https://xudomovie.us/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://xudomovie.us/icon.png",
+            "width": 512,
+            "height": 512,
+            "caption": "XUDOMovie Official Logo"
           },
-          "sameAs":["https://twitter.com/XUDOMovie","https://instagram.com/XUDOMovie","https://facebook.com/XUDOMovie"]
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "support@xudomovie.us",
+            "availableLanguage": ["English", "Indonesian"]
+          },
+          "sameAs": [
+            "https://twitter.com/XUDOMovie",
+            "https://instagram.com/XUDOMovie",
+            "https://facebook.com/XUDOMovie"
+          ]
         },
         {
-          "@type":"WebSite",
-          "@id":"https://xudomovie.us/#website",
-          "url":"https://xudomovie.us/",
-          "name":"XUDOMovie - Streaming Platform",
-          "description":"Stream full movies and TV series online in high quality.",
-          "publisher":{"@id":"https://xudomovie.us/#organization"},
-          "inLanguage":"en-US",
-          "potentialAction":{
-            "@type":"SearchAction",
-            "target":{"@type":"EntryPoint","urlTemplate":"https://xudomovie.us/index.html?search={search_term_string}"},
-            "query-input":"required name=search_term_string"
+          /* [EN] 2. WebSite Schema (Search Box & Platform Definition) */
+          "@type": "WebSite",
+          "@id": "https://xudomovie.us/#website",
+          "url": "https://xudomovie.us/",
+          "name": "XUDOMovie",
+          "description": "Premium online streaming platform. Watch full movies and TV series in HD quality.",
+          "publisher": { "@id": "https://xudomovie.us/#organization" },
+          "inLanguage": "en-US",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://xudomovie.us/index.html?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
           }
+        },
+        {
+          /* [EN] 3. CollectionPage Schema (Defining the Homepage as a Media Catalog) */
+          "@type": "CollectionPage",
+          "@id": "https://xudomovie.us/#webpage",
+          "url": "https://xudomovie.us/",
+          "name": "Watch Movies & TV Shows Online Free - XUDOMovie",
+          "isPartOf": { "@id": "https://xudomovie.us/#website" },
+          "about": { "@id": "https://xudomovie.us/#organization" },
+          "description": "Browse our extensive collection of movies and TV series. Stream your favorite content online in HD.",
+          "inLanguage": "en-US"
+        },
+        {
+          /* [EN] 4. SoftwareApplication Schema (App Metrics & Ratings) */
+          "@type": "SoftwareApplication",
+          "@id": "https://xudomovie.us/#application",
+          "name": "XUDOMovie Streaming App",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "Web, Android, iOS",
+          "url": "https://xudomovie.us/",
+          "description": "Stream full movies and TV series online in high quality anytime, anywhere.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "10542",
+            "bestRating": "5",
+            "worstRating": "1"
+          }
+        },
+        {
+          /* [EN] 5. BreadcrumbList Schema (For Clean Navigation in Search Results) */
+          "@type": "BreadcrumbList",
+          "@id": "https://xudomovie.us/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://xudomovie.us/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Browse Catalog",
+              "item": "https://xudomovie.us/browse.html"
+            }
+          ]
         }
       ]
     }

@@ -89,11 +89,16 @@ function updateCanonical() {
 
 /**
  * [EN] Updates the document title and meta description dynamically.
+ * [EN] Note: Assigning directly to document.title and meta.content is natively safe from XSS.
+ * [EN] Removing sanitizeHTML here prevents '&' from rendering as the literal text '&amp;'.
  */
 function updateSEOMeta(t, d) {
-    document.title = sanitizeHTML(t);
+    document.title = t;
+    
     let m = document.querySelector('meta[name="description"]') || document.createElement('meta');
-    m.name = 'description'; m.content = sanitizeHTML(d);
+    m.name = 'description'; 
+    m.content = d;
+    
     if (!m.parentNode) document.head.appendChild(m);
 }
 
@@ -451,7 +456,7 @@ async function initBrowse() {
     }
     if (!ep) return window.location.href = `index.html`;
 
-    document.getElementById('page-title').innerText = sanitizeHTML(title);
+    document.getElementById('page-title').innerText = title;
     document.getElementById('load-more-btn').onclick = () => loadBrowseContent();
     currentMediaType = type; currentBrowseEndpoint = ep;
     renderSkeletons('browse-grid', 15); 
@@ -595,7 +600,8 @@ async function initHome() {
         updateSEOMeta(`Search: ${q}`, `Results for ${q}`); 
         await performSearch(q);
     } else {
-        updateSEOMeta("XUDOMovie - Watch Movies & TV Shows Online Free", "XUDOMovie is your premium online streaming service. Watch full movies and TV series in HD quality.");
+        // [EN] Updated description to exactly match the static meta description in index.html
+        updateSEOMeta("XUDOMovie - Watch Movies & TV Shows Online Free", "XUDOMovie is your premium online streaming platform. Watch full movies and TV series in HD quality, anytime, anywhere.");
         await loadHeroSlider(); 
         loadContinueWatching(); 
         await loadAllSections();
