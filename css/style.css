@@ -934,7 +934,6 @@ a {
 }
 
 .share-btn,
-.watch-now-btn,
 .trailer-btn {
     flex: 1;
     padding: 12px 0;
@@ -963,14 +962,12 @@ a {
     background: #444;
 }
 
-.watch-now-btn,
 .trailer-btn {
     background: #e50914;
     border: none;
     color: #fff;
 }
 
-.watch-now-btn:hover,
 .trailer-btn:hover {
     background: #b2070f;
     transform: scale(1.02);
@@ -1288,44 +1285,6 @@ a {
     gap: 20px;
 }
 
-.sk-logo-big {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: #e50914;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.sk-logo-big span {
-    color: #fff;
-    font-weight: 700;
-    font-style: italic;
-}
-
-.sk-social-group {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.sk-keep-touch {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #888;
-    text-transform: uppercase;
-    margin-right: 10px;
-}
-
-.sk-soc-icon {
-    color: #ccc;
-    transition: 0.3s;
-}
-
-.sk-soc-icon:hover {
-    color: #e50914;
-    transform: translateY(-2px);
-}
-
 .sk-bottom-info {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -1375,108 +1334,6 @@ a {
     color: #e50914;
     font-size: 1.2rem;
     font-weight: 600;
-}
-
-/* PWA Install Elements */
-.pwa-btn-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.pwa-install-btn {
-    background: linear-gradient(135deg, #e50914 0%, #b2070f 100%);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 15px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-    font-family: "Saira", sans-serif;
-    text-align: left;
-    width: auto;
-    text-decoration: none;
-    line-height: 1;
-}
-
-.pwa-install-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(229, 9, 20, 0.6);
-}
-
-.pwa-icon-xm {
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    color: #e50914;
-    font-size: 1.3rem;
-    font-style: normal;
-    flex-shrink: 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.pwa-text-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    height: 45px;
-}
-
-.pwa-label-small {
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.9);
-    text-transform: none;
-    letter-spacing: 0.5px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    white-space: nowrap;
-}
-
-.pwa-label-big {
-    font-size: 1.2rem;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    line-height: 1;
-}
-
-.ios-install-popup {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid #444;
-    padding: 12px 24px;
-    border-radius: 50px;
-    z-index: 9999;
-    opacity: 0;
-    transition: all 0.4s ease;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    pointer-events: none;
-    white-space: nowrap;
-    font-size: 0.9rem;
-}
-
-.ios-install-popup.active {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-    pointer-events: auto;
 }
 
 /* ============================================
@@ -1609,8 +1466,7 @@ a {
     }
 
     .share-btn,
-    .trailer-btn,
-    .watch-now-btn {
+    .trailer-btn {
         flex: 1;
         justify-content: center;
         width: auto;
