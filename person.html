@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics (placeholder) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZLP60XCL2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FZLP60XCL2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+
+    <title>Person Profile | XUDOMovie</title>
+    <meta name="description" content="Explore the full filmography and biography of your favorite actors, directors, and crew on XUDOMovie.">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xudomovie.us/person.html">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="XUDOMovie">
+    <meta property="og:url" content="https://xudomovie.us/person.html">
+    <meta property="og:title" content="Person Profile | XUDOMovie">
+    <meta property="og:description" content="Explore the full filmography and biography of your favorite actor, director, or writer on XUDOMovie.">
+    <meta property="og:image" content="https://media.themoviedb.org/t/p/w500_and_h282_face/82lM4GJ9uuNvNDOEpxFy77uv4Ak.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Person Profile | XUDOMovie">
+    <meta name="twitter:description" content="Explore the full filmography and biography of your favorite actor, director, or writer on XUDOMovie.">
+    <meta name="twitter:image" content="https://media.themoviedb.org/t/p/w500_and_h282_face/82lM4GJ9uuNvNDOEpxFy77uv4Ak.jpg">
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+
+    <div id="global-header-placeholder"></div>
+
+    <!-- ========== PERSON PROFILE CONTAINER ========== -->
+    <div id="person-container" class="person-page-wrapper"></div>
+
+    <!-- ========== THEME TOGGLE ========== -->
+    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">
+        <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <!-- ========== TRAILER MODAL ========== -->
+    <div id="trailer-modal" class="trailer-modal" onclick="if(event.target===this)closeTrailer()">
+        <div class="trailer-modal-content">
+            <button class="trailer-close" onclick="closeTrailer()" aria-label="Close">✕</button>
+            <div id="trailer-video-container"></div>
+        </div>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <div id="global-footer-placeholder"></div>
+    <script src="js/global-header.js"></script>
+    <script src="js/global-footer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

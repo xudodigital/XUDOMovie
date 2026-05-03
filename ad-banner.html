@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: transparent; 
+        }
+        .promo-banner {
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <a href="#AffiliateLink" target="_blank">
+        <picture>
+            <!-- 1. If screen width is at least 500px (Tablet & Desktop), load this image -->
+            <source media="(min-width: 500px)" srcset="https://www.gorv.com.au/wp-content/uploads/2020/06/GO-RV-Banner-Ad-729-x-90.png">
+            
+            <!-- 2. Default image (Mobile), will be loaded if screen is below 500px -->
+            <img class="promo-banner" src="https://cdn.prod.website-files.com/63c7f7115d20aa484b96898b/63f74c3f544334032a35cede_320x90-Banner.png" alt="Exclusive Promo Ad">
+        </picture>
+    </a>
+</body>
+</html>
