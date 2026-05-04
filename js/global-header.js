@@ -1,5 +1,5 @@
 /**
- * XUDOMovie GLOBAL HEADER (Refactored v4)
+ * XUDOMovie GLOBAL HEADER (Refactored v5)
  * ------------------------------------------------
  * - [v2] .search-wrapper as direct child of <header> → CSS Grid 3-column.
  * - [v3] Nav Drawer slide-in from right, injected into <body>.
@@ -7,6 +7,9 @@
  *     • Desktop  → Full-width dropdown below header (4 columns).
  *     • Mobile   → Drawer slide-in from right (identical content).
  *   All links are static <a href> → crawlable by search engines (SEO).
+ * - [v5] Mega Menu columns updated:
+ *     • Column 3: Genre → Company (About, Contact, Privacy Policy, DMCA).
+ *     • Column 4: My Collection → Our Network.
  */
 (function () {
 
@@ -22,8 +25,8 @@
     /* ── SVG Icons — Mega Menu Columns ──────────────────────── */
     const ICON_FILM    = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`;
     const ICON_TV      = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`;
-    const ICON_TAG     = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`;
-    const ICON_COLLECT = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>`;
+    const ICON_COMPANY = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+    const ICON_NETWORK = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5.5" y2="16"/><line x1="12" y1="8" x2="18.5" y2="16"/></svg>`;
     const ICON_ARROW   = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>`;
 
     /* ── Mega Menu Content ──────────────────────────────────── */
@@ -35,10 +38,10 @@
             icon  : ICON_FILM,
             title : 'Movies',
             links : [
-                { label: 'Popular Movies',   href: 'browse?endpoint=%2Fmovie%2Fpopular&title=Popular%20Movies&type=movie&lang=en-US'         },
-                { label: 'Now Playing',      href: 'browse?endpoint=%2Fmovie%2Fnow_playing&title=Now%20Playing&type=movie&lang=en-US'           },
-                { label: 'Upcoming',         href: 'browse?endpoint=%2Fmovie%2Fupcoming&title=Upcoming&type=movie&lang=en-US'              },
-                { label: 'Top Rated Movies',        href: 'browse?endpoint=%2Fmovie%2Ftop_rated&title=Top%20Rated%20Movies&type=movie&lang=en-US'       },
+                { label: 'Popular Movies',    href: 'browse?endpoint=%2Fmovie%2Fpopular&title=Popular%20Movies&type=movie&lang=en-US'      },
+                { label: 'Now Playing',       href: 'browse?endpoint=%2Fmovie%2Fnow_playing&title=Now%20Playing&type=movie&lang=en-US'     },
+                { label: 'Upcoming',          href: 'browse?endpoint=%2Fmovie%2Fupcoming&title=Upcoming&type=movie&lang=en-US'             },
+                { label: 'Top Rated Movies',  href: 'browse?endpoint=%2Fmovie%2Ftop_rated&title=Top%20Rated%20Movies&type=movie&lang=en-US'},
             ],
         },
         {
@@ -46,36 +49,32 @@
             icon  : ICON_TV,
             title : 'TV Shows',
             links : [
-                { label: 'Popular TV Shows',    href: 'browse?endpoint=%2Ftv%2Fpopular&title=Popular%20TV%20Shows&type=tv&lang=en-US'            },
-                { label: 'Airing Today',     href: 'browse?endpoint=%2Ftv%2Fairing_today&title=Airing%20Today&type=tv&lang=en-US'             },
-                { label: 'On TV',       href: 'browse?endpoint=%2Ftv%2Fon_the_air&title=On%20TV&type=tv&lang=en-US'               },
-                { label: 'Top Rated TV Shows',        href: 'browse?endpoint=%2Ftv%2Ftop_rated&title=Top%20Rated%20TV%20Shows&type=tv&lang=en-US'          },
+                { label: 'Popular TV Shows',  href: 'browse?endpoint=%2Ftv%2Fpopular&title=Popular%20TV%20Shows&type=tv&lang=en-US'        },
+                { label: 'Airing Today',      href: 'browse?endpoint=%2Ftv%2Fairing_today&title=Airing%20Today&type=tv&lang=en-US'         },
+                { label: 'On TV',             href: 'browse?endpoint=%2Ftv%2Fon_the_air&title=On%20TV&type=tv&lang=en-US'                  },
+                { label: 'Top Rated TV Shows',href: 'browse?endpoint=%2Ftv%2Ftop_rated&title=Top%20Rated%20TV%20Shows&type=tv&lang=en-US'  },
             ],
         },
         {
-            id    : 'col-genre',
-            icon  : ICON_TAG,
-            title : 'Genre',
+            id    : 'col-company',
+            icon  : ICON_COMPANY,
+            title : 'Company',
             links : [
-                { label: 'Action',           href: 'browse.html?type=movie&genre=28'                     },
-                { label: 'Drama',            href: 'browse.html?type=movie&genre=18'                     },
-                { label: 'Comedy',           href: 'browse.html?type=movie&genre=35'                     },
-                { label: 'Horror',           href: 'browse.html?type=movie&genre=27'                     },
-                { label: 'Sci-Fi',           href: 'browse.html?type=movie&genre=878'                    },
-                { label: 'Animation',        href: 'browse.html?type=movie&genre=16'                     },
-                { label: 'Romance',          href: 'browse.html?type=movie&genre=10749'                  },
-                { label: 'Thriller',         href: 'browse.html?type=movie&genre=53'                     },
+                { label: 'About Us',          href: 'about.html'          },
+                { label: 'Contact Us',        href: 'contact.html'        },
+                { label: 'Privacy Policy',    href: 'privacy-policy.html' },
+                { label: 'DMCA Policy',       href: 'dmca.html'           },
             ],
         },
         {
-            id    : 'col-collection',
-            icon  : ICON_COLLECT,
-            title : 'My Collection',
+            id    : 'col-network',
+            icon  : ICON_NETWORK,
+            title : 'Our Network',
             links : [
-                { label: 'My Favorites',     href: 'browse.html?type=favorites'                          },
-                { label: 'Watch Later',      href: 'browse.html?type=watchlater'                         },
-                { label: 'Continue Watching',href: 'browse.html?type=continue'                           },
-                { label: 'Recently Added',   href: 'browse.html?type=movie&sort=primary_release_date.desc'},
+                { label: 'Network 1',         href: '#'                   },
+                { label: 'Network 2',         href: '#'                   },
+                { label: 'Network 3',         href: '#'                   },
+                { label: 'Network 4',         href: '#'                   },
             ],
         },
     ];

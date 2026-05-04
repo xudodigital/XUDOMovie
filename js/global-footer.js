@@ -1,10 +1,14 @@
 /**
- * XUDOMovie GLOBAL FOOTER
+ * XUDOMovie GLOBAL FOOTER (v2)
  * ------------------------------------------------
  * - Static HTML injected via placeholder element.
  * - All internal links use absolute paths for consistent SEO.
- * - "Discover" and "Our Network" columns are placeholders;
- *   replace href="#" with real target URLs before going live.
+ * - [v2] Changes:
+ *     • "Discover" column renamed to "Company" with links to
+ *       About Us, Contact, Privacy Policy, and DMCA Policy.
+ *     • "General Disclaimer" box removed (now covered by dedicated
+ *       Privacy Policy and DMCA pages linked from the Company column).
+ *     • TMDB Attribution box retained — required by TMDB API Terms.
  */
 
 /* ── Footer Column Data ─────────────────────────────────────
@@ -30,13 +34,14 @@ const FOOTER_COLS = [
         ],
     },
     {
-        heading : 'Discover',
+        // Renamed from "Discover" → "Company"
+        // Groups all static informational & legal pages in one column.
+        heading : 'Company',
         links   : [
-            { label: 'Link 1', href: '#', blank: true },
-            { label: 'Link 2', href: '#', blank: true },
-            { label: 'Link 3', href: '#', blank: true },
-            { label: 'Link 4', href: '#', blank: true },
-            { label: 'Link 5', href: '#', blank: true },
+            { label: 'About Us',         href: '/about.html'          },
+            { label: 'Contact Us',       href: '/contact.html'        },
+            { label: 'Privacy Policy',   href: '/privacy-policy.html' },
+            { label: 'DMCA Policy',      href: '/dmca.html'           },
         ],
     },
     {
@@ -98,7 +103,7 @@ const GLOBAL_FOOTER_CONTENT = `
         ${colsHTML}
     </div>
 
-    <!-- Brand row (logo + social) -->
+    <!-- Brand row (logo) -->
     <div class="sk-brand-row">
         <a href="/index.html" class="sk-logo-big" aria-label="XUDOMovie Home">XUDO<span>MOVIE</span></a>
     </div>
@@ -114,13 +119,16 @@ const GLOBAL_FOOTER_CONTENT = `
                owners. Content is used for informational and non-commercial purposes only.</p>
         </div>
         <div class="sk-about-box">
-            <div class="sk-office-title">General Disclaimer</div>
-            <p>We are not a provider of movies, TV shows, news, or streaming services.
-               We do not host, upload, or distribute any media content. All content —
-               including information, images, and trailers — is sourced from publicly
-               available third-party platforms and is provided for informational and
-               entertainment purposes only. All trademarks, logos, and media belong to
-               their respective owners.</p>
+            <div class="sk-office-title">Quick Links</div>
+            <p>
+                <a href="/about.html" style="color:inherit; margin-right:14px;">About Us</a>
+                <a href="/contact.html" style="color:inherit; margin-right:14px;">Contact</a>
+                <a href="/privacy-policy.html" style="color:inherit; margin-right:14px;">Privacy Policy</a>
+                <a href="/dmca.html" style="color:inherit;">DMCA Policy</a>
+            </p>
+            <p style="margin-top:10px;">XUDOMovie does not host or distribute any media content. All trademarks,
+               logos, and media belong to their respective owners.
+               &copy; ${new Date().getFullYear()} XUDODigital. All rights reserved.</p>
         </div>
     </div>
 

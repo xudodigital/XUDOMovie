@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZLP60XCL2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-FZLP60XCL2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+
+    <title>Contact Us | XUDOMovie — Get in Touch</title>
+    <meta name="description" content="Have a question, feedback, or a DMCA concern? Contact the XUDOMovie team. We typically respond within 2–3 business days.">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xudomovie.us/contact.html">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="XUDOMovie">
+    <meta property="og:url" content="https://xudomovie.us/contact.html">
+    <meta property="og:title" content="Contact Us | XUDOMovie">
+    <meta property="og:description" content="Have a question, feedback, or a DMCA concern? Contact the XUDOMovie team. We typically respond within 2–3 business days.">
+    <meta property="og:image" content="https://xudomovie.us/icon.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us | XUDOMovie">
+    <meta name="twitter:description" content="Have a question, feedback, or a DMCA concern? Contact the XUDOMovie team.">
+    <meta name="twitter:image" content="https://xudomovie.us/icon.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://xudomovie.us/#organization",
+                "name": "XUDOMovie",
+                "url": "https://xudomovie.us/",
+                "contactPoint": [
+                    {
+                        "@type": "ContactPoint",
+                        "contactType": "customer support",
+                        "email": "contact@xudomovie.us",
+                        "availableLanguage": ["English"]
+                    },
+                    {
+                        "@type": "ContactPoint",
+                        "contactType": "copyright agent",
+                        "email": "dmca@xudomovie.us",
+                        "availableLanguage": ["English"]
+                    }
+                ]
+            },
+            {
+                "@type": "ContactPage",
+                "@id": "https://xudomovie.us/contact.html",
+                "url": "https://xudomovie.us/contact.html",
+                "name": "Contact Us — XUDOMovie",
+                "description": "Get in touch with the XUDOMovie team for support, feedback, or legal enquiries.",
+                "isPartOf": { "@id": "https://xudomovie.us/#website" },
+                "breadcrumb": {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://xudomovie.us/" },
+                        { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://xudomovie.us/contact.html" }
+                    ]
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+
+    <div id="global-header-placeholder"></div>
+
+    <div class="static-page-wrapper">
+
+        <!-- Hero -->
+        <div class="page-hero">
+            <span class="eyebrow">Contact Us</span>
+            <h1>We'd Love to Hear From You</h1>
+            <p>Have a question, found an issue, or want to share feedback? Fill in the form and we'll get back to you as soon as possible.</p>
+        </div>
+
+        <!-- Main grid: form | sidebar -->
+        <div class="contact-grid">
+
+            <!-- Form card -->
+            <div class="contact-form-card">
+                <h2>Send Us a Message</h2>
+
+                <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cf-name">Full Name</label>
+                            <input type="text" id="cf-name" name="name" placeholder="Your full name" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-email">Email Address</label>
+                            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cf-subject">Subject</label>
+                        <select id="cf-subject" name="subject" required>
+                            <option value="" disabled selected>Select a subject…</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Content Issue">Content Issue</option>
+                            <option value="DMCA / Copyright">DMCA / Copyright</option>
+                            <option value="Partnership">Partnership</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cf-message">Message</label>
+                        <textarea id="cf-message" name="message" placeholder="Describe your enquiry in detail…" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+
+                <!-- Success state (shown via JS after submit) -->
+                <div class="form-success" id="form-success">
+                    <span class="success-icon">✅</span>
+                    <h3>Message Sent!</h3>
+                    <p>Thank you for reaching out. We'll review your message and respond within 2–3 business days.</p>
+                </div>
+            </div>
+
+            <!-- Info sidebar -->
+            <div class="contact-info">
+
+                <div class="info-card">
+                    <span class="info-icon">✉️</span>
+                    <h3>General Support</h3>
+                    <a href="mailto:contact@xudomovie.us">contact@xudomovie.us</a>
+                    <p>For general questions, feedback, and site issues.</p>
+                </div>
+
+                <div class="info-card">
+                    <span class="info-icon">⚖️</span>
+                    <h3>DMCA &amp; Legal</h3>
+                    <a href="mailto:dmca@xudomovie.us">dmca@xudomovie.us</a>
+                    <p>For copyright takedown notices and legal enquiries.</p>
+                </div>
+
+                <div class="info-card">
+                    <span class="info-icon">🤝</span>
+                    <h3>Partnerships</h3>
+                    <a href="mailto:contact@xudomovie.us">contact@xudomovie.us</a>
+                    <p>Interested in collaborating or advertising? Get in touch.</p>
+                </div>
+
+                <div class="info-card">
+                    <span class="info-icon">⏱️</span>
+                    <h3>Response Time</h3>
+                    <p>We typically respond within <strong>2–3 business days</strong>. DMCA requests are prioritised and handled within <strong>3–5 business days</strong>.</p>
+                </div>
+
+                <div class="notice-box">
+                    <p><strong>Important:</strong> For copyright removal requests, please use our dedicated <a href="/dmca.html">DMCA Policy</a> page for faster processing. Include all required information as outlined there.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
+        <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <div id="global-footer-placeholder"></div>
+
+    <script src="js/global-header.js"></script>
+    <script src="js/global-footer.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        /* Show success state after form submit (demo mode).
+           If using Formspree: remove e.preventDefault() so the form posts normally. */
+        (function () {
+            const form    = document.getElementById('contact-form');
+            const success = document.getElementById('form-success');
+            if (!form || !success) return;
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                form.style.display    = 'none';
+                success.style.display = 'block';
+            });
+        })();
+    </script>
+</body>
+</html>
