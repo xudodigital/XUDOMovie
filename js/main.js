@@ -75,6 +75,16 @@ const TEXTS = {
     sortLabel    : 'Sort:'
 };
 
+/**
+ * Whitelisted origins allowed to send postMessage progress events.
+ * Any message from an origin not in this Set is silently ignored to
+ * prevent rogue iframes (e.g. ad banners) from manipulating watch history.
+ */
+const TRUSTED_PLAYER_ORIGINS = new Set([
+    'https://vidlink.pro',
+    'https://vidsrc.to',
+]);
+
 const DEPT_LABELS = {
     'Acting'          : 'Actor',
     'Directing'       : 'Director',
@@ -183,14 +193,20 @@ function getWatchProgress(id) {
     return history.find(x => x.id == id)?.progress || 0;
 }
 
-/** Persist watch progress percentage for a given content ID. */
+/**
+ * Persist watch progress percentage (0–100) for a given content ID.
+ *
+ * Only updates existing history entries; it never inserts.
+ * This is intentional: updateContinueWatching() owns insertion and runs
+ * at t = 5 s, while the first save from initProgressListener fires at t = 6 s,
+ * guaranteeing the entry already exists by the time this is called.
+ */
 function saveWatchProgress(id, percent) {
     let history = JSON.parse(localStorage.getItem('xudo_history')) || [];
-    const idx = history.findIndex(x => x.id == id);
-    if (idx > -1) {
-        history[idx].progress = Math.min(100, Math.max(0, Math.round(percent)));
-        localStorage.setItem('xudo_history', JSON.stringify(history));
-    }
+    const idx   = history.findIndex(x => x.id == id);
+    if (idx === -1) return; // entry not yet created — updateContinueWatching will handle it
+    history[idx].progress = Math.min(100, Math.max(0, Math.round(percent)));
+    localStorage.setItem('xudo_history', JSON.stringify(history));
 }
 
 /**
@@ -227,51 +243,102 @@ function updateContinueWatching(item) {
 }
 
 /**
- * Listen for postMessage progress events from the embedded player
- * and fall back to time-based estimation when they are unavailable.
+ * Watch-progress subsystem.
+ *
+ * Three data sources are used, in descending order of accuracy:
+ *   1. postMessage events from the embedded player (real timestamps, most accurate).
+ *   2. Page elapsed time minus hidden time (fallback when the player is silent).
+ *   3. startedTimer at 6 s (marks "started" so the card appears in Continue Watching).
+ *
+ * Key design decisions:
+ *   - startedTimer fires at t = 6 s, after updateContinueWatching's t = 5 s delay,
+ *     so the history entry is guaranteed to exist before the first save attempt.
+ *   - Elapsed time is corrected for tab-hidden periods via the Page Visibility API,
+ *     preventing overestimation when the browser tab is not active.
+ *   - postMessage events are only trusted from TRUSTED_PLAYER_ORIGINS to prevent
+ *     rogue iframes from manipulating the progress bar.
+ *   - Content that reaches ≥ 98 % is reset to 0 so it can be re-watched cleanly.
  */
 function initProgressListener(contentId, runtimeMinutes = 0) {
     let progressSavedViaMessage = false;
-    const pageStartTime = Date.now();
 
-    window.addEventListener('message', (event) => {
+    // Use the moment the player iframe finished loading as the watch-start baseline.
+    // Falls back to Date.now() when the player has not yet set the flag
+    // (e.g. initStaticPage path where updatePlayer may not have been called).
+    const watchStartTime = window._playerReadyTime || Date.now();
+
+    // ── Page Visibility API ───────────────────────────────────────────────────
+    // Track total time the tab was hidden so the fallback estimate stays accurate.
+    // When the tab is not visible the embedded player is typically paused.
+    let hiddenDuration = 0;
+    let hiddenAt       = null;
+
+    function onVisibilityChange() {
+        if (document.hidden) {
+            hiddenAt = Date.now();
+        } else if (hiddenAt !== null) {
+            hiddenDuration += Date.now() - hiddenAt;
+            hiddenAt = null;
+        }
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    /** Active viewing time in minutes (tab-hidden periods excluded). */
+    function activeElapsedMinutes() {
+        const inProgressHiddenMs = hiddenAt !== null ? Date.now() - hiddenAt : 0;
+        return (Date.now() - watchStartTime - hiddenDuration - inProgressHiddenMs) / 60000;
+    }
+
+    // ── postMessage listener ─────────────────────────────────────────────────
+    function onPlayerMessage(event) {
+        // Reject messages from untrusted origins (e.g. ad iframes).
+        if (!TRUSTED_PLAYER_ORIGINS.has(event.origin)) return;
         try {
             const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-            if (data?.type === 'timeupdate' && data.current > 0 && data.duration > 0) {
-                const percent = (data.current / data.duration) * 100;
-                if (percent > 2 && percent < 98) {
-                    saveWatchProgress(contentId, percent);
-                    progressSavedViaMessage = true;
-                } else if (percent >= 98) {
-                    saveWatchProgress(contentId, 100);
-                    progressSavedViaMessage = true;
-                }
-            }
-        } catch (_) {}
-    });
+            if (data?.type !== 'timeupdate' || !(data.current > 0) || !(data.duration > 0)) return;
 
-    // Mark as "started" after 5 s if no player events have fired
+            const percent = (data.current / data.duration) * 100;
+
+            if (percent >= 98) {
+                // Content finished — reset to 0 so user can re-watch cleanly.
+                saveWatchProgress(contentId, 0);
+            } else if (percent > 2) {
+                saveWatchProgress(contentId, percent);
+            }
+            // Disable the less-accurate fallback path once real events arrive.
+            progressSavedViaMessage = true;
+        } catch (_) {}
+    }
+    window.addEventListener('message', onPlayerMessage);
+
+    // ── startedTimer ─────────────────────────────────────────────────────────
+    // Fires at t = 6 s — 1 s after updateContinueWatching's t = 5 s delay —
+    // so the localStorage entry is guaranteed to exist when saveWatchProgress runs.
     const startedTimer = setTimeout(() => {
         if (!progressSavedViaMessage) saveWatchProgress(contentId, 5);
-    }, 5000);
+    }, 6000);
 
-    // Periodically estimate progress from elapsed time
+    // ── Periodic fallback estimate (once per minute) ──────────────────────────
     let timeUpdateInterval = null;
     if (runtimeMinutes > 0) {
         timeUpdateInterval = setInterval(() => {
+            // Stop estimating as soon as real player events take over.
             if (progressSavedViaMessage) { clearInterval(timeUpdateInterval); return; }
-            const elapsedMin = (Date.now() - pageStartTime) / 60000;
-            const percent    = Math.min(95, (elapsedMin / runtimeMinutes) * 100);
+            const percent = Math.min(95, (activeElapsedMinutes() / runtimeMinutes) * 100);
             if (percent > 5) saveWatchProgress(contentId, percent);
         }, 60000);
     }
 
+    // ── beforeunload — final save before the page closes ─────────────────────
     window.addEventListener('beforeunload', () => {
         if (!progressSavedViaMessage && runtimeMinutes > 0) {
-            const elapsedMin = (Date.now() - pageStartTime) / 60000;
-            const percent    = Math.min(95, (elapsedMin / runtimeMinutes) * 100);
+            const percent = Math.min(95, (activeElapsedMinutes() / runtimeMinutes) * 100);
             if (percent > 2) saveWatchProgress(contentId, percent);
         }
+        // Remove named listeners and cancel timers to avoid memory leaks
+        // in single-page-application contexts where the watch page may reload.
+        document.removeEventListener('visibilitychange', onVisibilityChange);
+        window.removeEventListener('message', onPlayerMessage);
         clearTimeout(startedTimer);
         if (timeUpdateInterval) clearInterval(timeUpdateInterval);
     }, { once: true });
@@ -1404,6 +1471,11 @@ async function initWatchPage() {
 function updatePlayer(type, id) {
     const el = document.getElementById('player-container') || document.getElementById('static-player');
     if (!el) return;
+
+    // Reset the ready-time flag so initProgressListener gets a fresh baseline
+    // when the user switches server or episode.
+    window._playerReadyTime = null;
+
     el.innerHTML = '<div style="display:grid;place-items:center;height:100%;background:#000;color:#fff"><div class="loader">Loading Player...</div></div>';
 
     let src = '';
@@ -1420,7 +1492,25 @@ function updatePlayer(type, id) {
             default: src = `https://vidlink.pro/tv/${id}/${currentSeason}/${currentEpisode}`;
         }
     }
-    el.innerHTML = `<iframe src="${src}" class="player-frame" allowfullscreen allow="autoplay" scrolling="no" frameborder="0" style="width:100%;height:100%;border:none;"></iframe>`;
+
+    // Build the iframe via DOM API (avoids innerHTML injection) and record the
+    // exact moment it finishes loading as the watch-start time baseline.
+    const iframe = document.createElement('iframe');
+    iframe.src          = src;
+    iframe.className    = 'player-frame';
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('allow', 'autoplay');
+    iframe.scrolling    = 'no';
+    iframe.frameBorder  = '0';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;';
+    iframe.addEventListener('load', () => {
+        // Record when the player document is ready — used as the watch-start
+        // baseline in initProgressListener to avoid counting page-load time.
+        window._playerReadyTime = Date.now();
+    }, { once: true });
+
+    el.innerHTML = '';
+    el.appendChild(iframe);
 }
 
 /** Switch to a different embed server and reload the player. */
@@ -1520,7 +1610,9 @@ async function fetchMovieDetails(type, id) {
         const rt    = type === 'movie' && d.runtime
             ? `${Math.floor(d.runtime / 60)}h ${d.runtime % 60}m`
             : (type === 'tv' && d.episode_run_time?.[0] ? `${d.episode_run_time[0]}m / ep` : 'N/A');
-        window._currentRuntimeMinutes = type === 'movie' ? d.runtime : (d.episode_run_time?.[0] || 90);
+        window._currentRuntimeMinutes = type === 'movie'
+            ? (d.runtime || 90)                          // default 90 min for unknown movies
+            : (d.episode_run_time?.[0] || 45);           // 45 min is more representative for TV than 90
 
         updateSEOMeta(`${title} (${year}) - Reviews & Details | XUDOMovie`, `Read reviews and watch the trailer for ${title}.`);
 
