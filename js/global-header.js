@@ -38,7 +38,7 @@
                 { label: 'Popular Movies',   href: 'browse?endpoint=%2Fmovie%2Fpopular&title=Popular%20Movies&type=movie&lang=en-US'         },
                 { label: 'Now Playing',      href: 'browse?endpoint=%2Fmovie%2Fnow_playing&title=Now%20Playing&type=movie&lang=en-US'           },
                 { label: 'Upcoming',         href: 'browse?endpoint=%2Fmovie%2Fupcoming&title=Upcoming&type=movie&lang=en-US'              },
-                { label: 'Top Rated',        href: 'browse?endpoint=%2Fmovie%2Ftop_rated&title=Top%20Rated%20Movies&type=movie&lang=en-US'       },
+                { label: 'Top Rated Movies',        href: 'browse?endpoint=%2Fmovie%2Ftop_rated&title=Top%20Rated%20Movies&type=movie&lang=en-US'       },
             ],
         },
         {
@@ -46,11 +46,10 @@
             icon  : ICON_TV,
             title : 'TV Shows',
             links : [
-                { label: 'Popular Shows',    href: 'browse.html?type=tv&sort=popularity.desc'            },
-                { label: 'Airing Today',     href: 'browse.html?type=tv&filter=airing_today'             },
-                { label: 'On The Air',       href: 'browse.html?type=tv&filter=on_the_air'               },
-                { label: 'Top Rated',        href: 'browse.html?type=tv&sort=vote_average.desc'          },
-                { label: 'All TV Shows',     href: 'browse.html?type=tv'                                 },
+                { label: 'Popular TV Shows',    href: 'browse?endpoint=%2Ftv%2Fpopular&title=Popular%20TV%20Shows&type=tv&lang=en-US'            },
+                { label: 'Airing Today',     href: 'browse?endpoint=%2Ftv%2Fairing_today&title=Airing%20Today&type=tv&lang=en-US'             },
+                { label: 'On TV',       href: 'browse?endpoint=%2Ftv%2Fon_the_air&title=On%20TV&type=tv&lang=en-US'               },
+                { label: 'Top Rated TV Shows',        href: 'browse?endpoint=%2Ftv%2Ftop_rated&title=Top%20Rated%20TV%20Shows&type=tv&lang=en-US'          },
             ],
         },
         {
