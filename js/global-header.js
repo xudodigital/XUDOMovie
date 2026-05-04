@@ -35,11 +35,10 @@
             icon  : ICON_FILM,
             title : 'Movies',
             links : [
-                { label: 'Popular Movies',   href: 'browse.html?type=movie&sort=popularity.desc'         },
-                { label: 'Now Playing',      href: 'browse.html?type=movie&filter=now_playing'           },
-                { label: 'Upcoming',         href: 'browse.html?type=movie&filter=upcoming'              },
-                { label: 'Top Rated',        href: 'browse.html?type=movie&sort=vote_average.desc'       },
-                { label: 'All Movies',       href: 'browse.html?type=movie'                              },
+                { label: 'Popular Movies',   href: 'browse?endpoint=%2Fmovie%2Fpopular&title=Popular%20Movies&type=movie&lang=en-US'         },
+                { label: 'Now Playing',      href: 'browse?endpoint=%2Fmovie%2Fnow_playing&title=Now%20Playing&type=movie&lang=en-US'           },
+                { label: 'Upcoming',         href: 'browse?endpoint=%2Fmovie%2Fupcoming&title=Upcoming&type=movie&lang=en-US'              },
+                { label: 'Top Rated',        href: 'browse?endpoint=%2Fmovie%2Ftop_rated&title=Top%20Rated%20Movies&type=movie&lang=en-US'       },
             ],
         },
         {
